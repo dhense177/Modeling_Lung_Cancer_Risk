@@ -19,6 +19,7 @@ def col_changes(df_lung):
     df_lung["State"] = df_lung["State"].str.get(0)
     df_lung["State_and_county"] = df_lung["County"]+" County, "+df_lung["State"]
 
+#Maps fips codes onto lung dataframe broken out by gender
 def adjust_fips(fips):
     lst = []
     for i in df_both['State & County']:
@@ -30,6 +31,7 @@ def adjust_fips(fips):
     df_both['Gender'] = ['1' if i=='Male' else '2' for i in df_both.Sex]
     df_both['Combined'] = df_both['State-county recode']+df_both['Gender']
 
+#Maps fips codes onto lung dataframe not broken out by gender
 def adjust_fips_overall(fips):
     lst = []
     for i in df_both['State & County']:
@@ -40,6 +42,7 @@ def adjust_fips_overall(fips):
     df_both['State-county recode'] = lst
     df_both['Combined'] = df_both['State-county recode']
 
+#Finds index of state + county combo (combined column) in smoking estimates file
 def index_lookup_overall(df_lung):
     counter = 0
     lst = []
@@ -52,7 +55,7 @@ def index_lookup_overall(df_lung):
         counter += 1
     return lst
 
-#
+#Finds index of st + county + gender combo (combined column) in smoking estimates file
 def index_lookup(df_lung):
     lst = []
     for i in df_lung["Combined"]:
@@ -63,6 +66,7 @@ def index_lookup(df_lung):
             lst.append(ind)
     return lst
 
+#Finds index of state-county recode number in air quality data
 def index_lookup2(df_lung):
     lst = []
     for i in df_lung['State-county recode_x']:
@@ -73,6 +77,7 @@ def index_lookup2(df_lung):
             lst.append(ind)
     return lst
 
+#Adds smoking data to lung dataframes
 def add_smoking(lst, df_both, df_lung):
     arr = []
     for x in lst:
@@ -89,7 +94,7 @@ def add_smoking(lst, df_both, df_lung):
         df_lung[str(yr)+"_smoking"] = [i[counter] for i in arr]
         counter += 1
 
-
+#Adds air quality data to lung dataframes
 def add_air(lst, df_lung):
     arr = []
     for x in lst:

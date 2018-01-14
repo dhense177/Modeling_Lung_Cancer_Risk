@@ -54,7 +54,7 @@ def group_pop(df):
     pop_final['Sex']=pop_final.Combined.str[5:]
     return pop_final
 
-#grouped without gender
+#Grouped without gender
 def group_pop_overall(df):
     pop_binned = pd.DataFrame(df.groupby(['State-county recode','Year'])['Population'].sum().reset_index())
     pop_binned['Combined'] = pop_binned['State-county recode'].astype(str)
@@ -84,6 +84,7 @@ def parse(df):
     df_parsed = pd.DataFrame.from_dict(dct, orient='index')
     return df_parsed
 
+#Creates 3 age bins
 def agebins(df_new):
     df_new.loc[ df_new.Age.apply(pd.to_numeric) <= 30, 'Age'] = 0
     df_new.loc[(df_new.Age.apply(pd.to_numeric) > 30) & (df_new.Age.apply(pd.to_numeric) <= 60), 'Age'] = 1,'Sex'

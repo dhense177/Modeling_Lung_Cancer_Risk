@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from datetime import datetime
 
-
+#Process dates and add a few columns
 def process(df):
     start_dates = df.startdt.apply(lambda x: str(x).zfill(6))
     stop_dates = df.stopdt.apply(lambda x: str(x).zfill(6))
@@ -34,7 +34,7 @@ def index_lookup(df_lung):
         counter += 1
     return lst
 
-
+#Adds radon data to lung cancer dataframe
 def add_radon(lst, df_lung):
     newlist = []
     for x in lst:
@@ -58,6 +58,7 @@ if __name__=='__main__':
 
     process(df)
 
+    #Using mean county-wide radon activity over years 1988-1992 due to data sparcity
     grouped = pd.DataFrame(df.groupby(['State_and_county'])['activity'].mean()).reset_index()
 
 

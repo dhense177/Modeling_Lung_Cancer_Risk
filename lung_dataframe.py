@@ -27,17 +27,13 @@ def frame(filepath):
 
 
 if __name__=='__main__':
-    files = ['RESPIR.csv','RESPIR2.csv','RESPIR3.csv']
-    folder = '/home/davidhenslovitz/Galvanize/ZNAHealth/CSV/'
+
 
     framed_pickle = 'framed.pickle'
 
     if not os.path.isfile(framed_pickle):
-        dct = {}
-        for f in files:
-            full = folder+f
-            dct[f] = frame(full)
-        total = pd.concat(dct.values(),ignore_index=True)
+        filepath = '/home/davidhenslovitz/Galvanize/ZNAHealth/RESPIR.csv'
+        total = frame(filepath)
         print("...saving pickle")
         tmp = open(framed_pickle,'wb')
         pickle.dump(total,tmp)

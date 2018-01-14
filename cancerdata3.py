@@ -35,31 +35,21 @@ def create_df(dct, df):
 
 
 if __name__=='__main__':
-    filepath = '/home/davidhenslovitz/Galvanize/ZNAHealth/SEER_1973_2014_TEXTDATA/incidence/yr2000_2014.ca_ky_lo_nj_ga/'
-    x = os.listdir(path=filepath)
+    filepath1 = '/home/davidhenslovitz/Galvanize/ZNAHealth/SEER_1973_2014_TEXTDATA/incidence/yr1973_2014.seer9/RESPIR.TXT'
+    filepath2 = '/home/davidhenslovitz/Galvanize/ZNAHealth/SEER_1973_2014_TEXTDATA/incidence/yr1992_2014.sj_la_rg_ak/RESPIR.TXT'
+    filepath3 = '/home/davidhenslovitz/Galvanize/ZNAHealth/SEER_1973_2014_TEXTDATA/incidence/yr2000_2014.ca_ky_lo_nj_ga/RESPIR.TXT'
+
+    filepaths = [filepath1, filepath2, filepath3]
+
     master_df = pd.DataFrame()
 
-    parsed_pickle = 'parsed.pickle'
-
-    if not os.path.isfile(parsed_pickle):
-        counter = 1
-        for textfile in x:
-            df = pd.read_table(filepath+textfile, header=None)
-            parsed = parse_rows(df)
-            new_df = create_df(parsed, clean_df)
-            new_df['cancer_type'] = counter
-            master_df = master_df.append(new_df)
-            counter += 1
-        processed = master_df
-        print("...saving pickle")
-        tmp = open(parsed_pickle,'wb')
-        pickle.dump(processed,tmp)
-        tmp.close()
-    else:
-        print("...loading pickle")
-        tmp = open(parsed_pickle,'rb')
-        processed = pickle.load(tmp)
-        tmp.close()
 
 
-    print(processed.head())
+    for textfile in filepaths:
+        df = pd.read_table(textfile, header=None)
+        parsed = parse_rows(df)
+        new_df = create_df(parsed, clean_df)
+        master_df = master_df.append(new_df)
+
+
+    master_df.to_csv('RESPIR.csv', index=False)

@@ -8,13 +8,13 @@ Data sources and files:
   -Python file(s): cancerdata3.py
 
 2) CDC Air Quality Tracking Network
-  -Source:
+  -Source: 
   -Description: National county-level data
   -Years:1999-2013
   -Python file(s): join_smoking_air.py
 
 3) State Health Policy Research Dataset (SHEPRD)
-  -Source:
+  -Source: http://www.icpsr.umich.edu/icpsrweb/HMCA/studies/34789
   -Description: State-level smoking data
   -Years: 1980-2010
   -Python file(s):
@@ -26,7 +26,7 @@ Data sources and files:
   -Python file(s): join_smoking_air.py
 
 5) EPA Air Data
-  -Source:
+  -Source: https://aqs.epa.gov/aqsweb/airdata/download_files.html#AQI
   -Description: County-level Air Quality data (Air Quality Index)
   -Years: 1980-2017
   -Python file(s): AQI.py

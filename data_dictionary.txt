@@ -1,0 +1,44 @@
+Data sources and files:
+* Note: All data is publicly available except the SEER data - a research agreement must be signed in order to access it
+
+1) SEER data
+  -Source: https://seer.cancer.gov/data/
+  -Description: Cancer incidence & population data for 15 U.S. states county-level
+  -Years: 1973-2014
+  -Python file(s): cancerdata3.py
+
+2) CDC Air Quality Tracking Network
+  -Source:
+  -Description: National county-level data
+  -Years:1999-2013
+  -Python file(s): join_smoking_air.py
+
+3) State Health Policy Research Dataset (SHEPRD)
+  -Source:
+  -Description: State-level smoking data
+  -Years: 1980-2010
+  -Python file(s):
+
+4) Publication: Cigarette smoking prevalence in US counties: 1996-2012
+  -Source: https://www.ncbi.nlm.nih.gov/pubmed/24661401
+  -Description: County-level smoking prevalence estimates
+  -Years: 1996-2012
+  -Python file(s): join_smoking_air.py
+
+5) EPA Air Data
+  -Source:
+  -Description: County-level Air Quality data (Air Quality Index)
+  -Years: 1980-2017
+  -Python file(s): AQI.py
+
+6) EPA State Residential Radon Surveys
+  -Source: http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/
+  -Description: Radon activity in U.S. households
+  -Years: 1988-1992
+  -Python file(s): radon.py
+
+7) EPA Toxics Release Inventory(TRI) data
+  -Source: https://www.epa.gov/toxics-release-inventory-tri-program/tri-basic-data-files-calendar-years-1987-2016
+  -Description: Toxic chemical release data across the U.S. (lat/long)
+  -Years: 1987-2016
+  -Python file(s): TRI.py

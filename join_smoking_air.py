@@ -20,27 +20,15 @@ def col_changes(df_lung):
     df_lung["State_and_county"] = df_lung["County"]+" County, "+df_lung["State"]
 
 #Maps fips codes onto lung dataframe broken out by gender
-def adjust_fips(fips):
+def adjust_fips(fips, df_both):
     lst = []
     for i in df_both['State & County']:
         if i not in list(fips['State & County'].values):
             lst.append('0')
         else:
             lst.append(fips.iloc[list(fips['State & County'].values).index(i)]['FIPS'])
-    df_both['State-county recode'] = lst
-    df_both['Gender'] = ['1' if i=='Male' else '2' for i in df_both.Sex]
-    df_both['Combined'] = df_both['State-county recode']+df_both['Gender']
+    return lst
 
-#Maps fips codes onto lung dataframe not broken out by gender
-def adjust_fips_overall(fips):
-    lst = []
-    for i in df_both['State & County']:
-        if i not in list(fips['State & County'].values):
-            lst.append('0')
-        else:
-            lst.append(fips.iloc[list(fips['State & County'].values).index(i)]['FIPS'])
-    df_both['State-county recode'] = lst
-    df_both['Combined'] = df_both['State-county recode']
 
 #Finds index of state + county combo (combined column) in smoking estimates file
 def index_lookup_overall(df_lung):
@@ -55,6 +43,7 @@ def index_lookup_overall(df_lung):
         counter += 1
     return lst
 
+#Merge instead?
 #Finds index of st + county + gender combo (combined column) in smoking estimates file
 def index_lookup(df_lung):
     lst = []
@@ -134,8 +123,17 @@ if __name__=='__main__':
     fips.FIPS = fips.FIPS.apply(lambda x: str(x).zfill(5))
     fips['State & County'] = fips.Name + ' County, ' + fips.State
 
-    adjust_fips(fips)
-    adjust_fips_overall(fips)
+    lst = adjust_fips(fips, df_both)
+
+    df_both['State-county recode'] = lst
+    df_both['Gender'] = ['1' if i=='Male' else '2' for i in df_both.Sex]
+    df_both['Combined'] = df_both['State-county recode']+df_both['Gender']
+
+    lst = adjust_fips(fips, df_overall)
+
+    df_overall['State-county recode'] = lst
+    df_overall['Gender'] = ['0' for i in df_overall['State-county recode']]
+    df_overall['Combined'] = df_overall['State-county recode']
 
     col_changes(df_lung)
     col_changes(df_lung_overall)
@@ -167,8 +165,9 @@ if __name__=='__main__':
 
     df_lung_overall.drop(['Sex_x','State-county recode_y','Sex_y', 'County','State'],axis=1, inplace=True)
 
-    df_lung = df_lung.fillna(0)
+
+    df_lung.drop(df_lung[pd.isnull(df_lung).any(axis=1)].index, inplace=True)
     df_lung.to_csv('lung_dataframe.csv', index=False)
 
-    df_lung_overall = df_lung_overall.fillna(0)
+    df_lung_overall.drop(df_lung_overall[pd.isnull(df_lung_overall).any(axis=1)].index, inplace=True)
     df_lung_overall.to_csv('lung_dataframe_overall.csv', index=False)

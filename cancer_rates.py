@@ -144,6 +144,13 @@ if __name__=='__main__':
         for i in range(2000,2015):
             combined[i] = combined[str(i)+"_y"]/combined[str(i)+"_x"]
             combined_overall[i] = combined_overall[str(i)+"_y"]/combined_overall[str(i)+"_x"]
+        combined.drop(combined[pd.isnull(combined).any(axis=1)].index, inplace=True)
+        combined.drop(combined[combined['State-county recode_x']=='15005'].index,
+        inplace=True)
+
+        combined_overall.drop(combined_overall[pd.isnull(combined_overall).any(
+        axis=1)].index, inplace=True)
+
         print("...saving pickle")
         tmp = open(rates_pickle,'wb')
         pickle.dump(combined,tmp)

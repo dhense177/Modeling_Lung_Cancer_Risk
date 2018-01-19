@@ -72,6 +72,9 @@ if __name__=='__main__':
 
     lst_overall = index_lookup(df_lung_overall)
     add_radon(lst_overall, df_lung_overall)
+
     df_lung.drop(df_lung[pd.isnull(df_lung).any(axis=1)].index, inplace=True)
     df_lung.to_csv('lung_dataframe3.csv', index=False)
+
+    df_lung_overall.drop(df_lung_overall[pd.isnull(df_lung_overall).any(axis=1)].index, inplace=True)
     df_lung_overall.to_csv('lung_dataframe_overall3.csv', index=False)

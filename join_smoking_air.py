@@ -45,7 +45,7 @@ def index_lookup_overall(df_lung):
 
 #Merge instead?
 #Finds index of st + county + gender combo (combined column) in smoking estimates file
-def index_lookup(df_lung):
+def index_lookup(df_lung, df_both):
     lst = []
     for i in df_lung["Combined"]:
         if (pd.isnull(i) or i not in list(df_both['Combined'].values)):
@@ -56,7 +56,7 @@ def index_lookup(df_lung):
     return lst
 
 #Finds index of state-county recode number in air quality data
-def index_lookup2(df_lung):
+def index_lookup2(df_lung, df_pm2new):
     lst = []
     for i in df_lung['State-county recode_x']:
         if (i not in list(df_pm2new.index)):
@@ -67,7 +67,7 @@ def index_lookup2(df_lung):
     return lst
 
 #Adds smoking data to lung dataframes
-def add_smoking(lst, df_both, df_lung):
+def add_smoking(lst, df_both, df_lung, name):
     arr = []
     for x in lst:
         new_list = []
@@ -80,11 +80,11 @@ def add_smoking(lst, df_both, df_lung):
 
     counter = 0
     for yr in df_both.iloc[1][1:18].index:
-        df_lung[str(yr)+"_smoking"] = [i[counter] for i in arr]
+        df_lung[str(yr)+name] = [i[counter] for i in arr]
         counter += 1
 
 #Adds air quality data to lung dataframes
-def add_air(lst, df_lung):
+def add_air(lst, df_lung, df_pm2new, name):
     arr = []
     for x in lst:
         new_list = []
@@ -97,10 +97,23 @@ def add_air(lst, df_lung):
 
     counter = 0
     for col in df_pm2new.columns:
-        df_lung[str(col)+"_air"] = [i[counter] for i in arr]
+        df_lung[str(col)+name] = [i[counter] for i in arr]
         counter += 1
 
+def smoking_changes(df):
+    df_overall = df[df.Sex=='Both']
+    df_both = df[df.Sex!='Both']
 
+    lst = adjust_fips(fips, df_both)
+    df_both['State-county recode'] = lst
+    df_both['Gender'] = ['1' if i=='Male' else '2' for i in df_both.Sex]
+    df_both['Combined'] = df_both['State-county recode']+df_both['Gender']
+
+    lst = adjust_fips(fips, df_overall)
+    df_overall['State-county recode'] = lst
+    df_overall['Gender'] = ['0' for i in df_overall['State-county recode']]
+    df_overall['Combined'] = df_overall['State-county recode']
+    return df_both, df_overall
 
 if __name__=='__main__':
     print("...loading pickle")
@@ -109,61 +122,71 @@ if __name__=='__main__':
     tmp.close()
 
     print("...loading pickle")
-    tmp = open('rates_overall.pickle','rb')
+    tmp = open('final_rates.pickle','rb')
     df_lung_overall = pickle.load(tmp)
     tmp.close()
 
     df = pd.read_excel('Smoking/smoking_estimates_means.xlsx')
-    df_ci = pd.read_excel('Smoking/smoking_estimates_ci.xlsx')
+    df_daily = pd.read_excel('Smoking/smoking_daily_means.xlsx')
 
-    df_overall = df[df.Sex=='Both']
-    df_both = df[df.Sex!='Both']
+
 
     fips = pd.read_excel('FIPS.xlsx')
     fips.FIPS = fips.FIPS.apply(lambda x: str(x).zfill(5))
     fips['State & County'] = fips.Name + ' County, ' + fips.State
 
-    lst = adjust_fips(fips, df_both)
+    df_both, df_overall = smoking_changes(df)
+    df_both_daily, df_overall_daily = smoking_changes(df_daily)
 
-    df_both['State-county recode'] = lst
-    df_both['Gender'] = ['1' if i=='Male' else '2' for i in df_both.Sex]
-    df_both['Combined'] = df_both['State-county recode']+df_both['Gender']
 
-    lst = adjust_fips(fips, df_overall)
 
-    df_overall['State-county recode'] = lst
-    df_overall['Gender'] = ['0' for i in df_overall['State-county recode']]
-    df_overall['Combined'] = df_overall['State-county recode']
 
     col_changes(df_lung)
     col_changes(df_lung_overall)
 
-    lst = index_lookup(df_lung)
-    add_smoking(lst, df_both, df_lung)
+    lst = index_lookup(df_lung, df_both)
+    add_smoking(lst, df_both, df_lung, '_smoking_total')
+
+    lst2 = index_lookup(df_lung, df_both_daily)
+    add_smoking(lst2, df_both_daily, df_lung, '_smoking_daily')
 
     lst_overall = index_lookup_overall(df_lung_overall)
-    add_smoking(lst_overall, df_overall, df_lung_overall)
+    add_smoking(lst_overall, df_overall, df_lung_overall, 'smoking_total')
+
+    lst_overall2 = index_lookup_overall(df_lung_overall)
+    add_smoking(lst_overall2, df_overall_daily, df_lung_overall, 'smoking_daily')
 
     df_air = pd.read_csv('Air_Quality_Measures_on_the_National_Environmental_Health_Tracking_Network.csv')
+
+
+
+    df_air['CountyFips'] = df_air['CountyFips'].apply(lambda x: str(x).zfill(5))
+    df_air = df_air[['MeasureName', 'CountyFips', 'ReportYear','Value','UnitName']]
 
     # Try a few metrics out here
     df_pm2 = df_air[df_air.MeasureName=='Annual average ambient concentrations of PM 2.5 in micrograms per cubic meter, based on seasonal averages and daily measurement (monitor and modeled data)']
 
-    df_pm2['CountyFips'] = df_pm2['CountyFips'].apply(lambda x: str(x).zfill(5))
+    df_ozone = df_air[df_air.MeasureName=='Number of days with maximum 8-hour average ozone concentration over the National Ambient Air Quality Standard (monitor and modeled data)']
 
-    df_pm2 = df_pm2[['CountyFips', 'ReportYear','Value','UnitName']]
     df_pm2new = df_pm2.pivot(index='CountyFips', columns='ReportYear', values='Value')
+    df_ozonenew = df_ozone.pivot(index='CountyFips', columns='ReportYear', values='Value')
+
+    lst = index_lookup2(df_lung, df_pm2new)
+    add_air(lst, df_lung, df_pm2new, "PM2.5")
+
+    lst2 = index_lookup2(df_lung, df_ozonenew)
+    add_air(lst2, df_lung, df_ozonenew, "Ozone")
 
 
-    lst = index_lookup2(df_lung)
-    add_air(lst, df_lung)
+    lst_overall = index_lookup2(df_lung_overall, df_pm2new)
+    add_air(lst_overall, df_lung_overall, df_pm2new, "PM2.5")
 
-    lst_overall = index_lookup2(df_lung_overall)
-    add_air(lst_overall, df_lung_overall)
+    lst_overall2 = index_lookup2(df_lung_overall, df_ozonenew)
+    add_air(lst_overall2, df_lung_overall, df_ozonenew, "Ozone")
 
-    df_lung.drop(['Sex_x','State-county recode_y','Sex_y', 'County','State'],axis=1, inplace=True)
+    # df_lung.drop(['State-county recode_y','Sex', 'County','State'],axis=1, inplace=True)
 
-    df_lung_overall.drop(['Sex_x','State-county recode_y','Sex_y', 'County','State'],axis=1, inplace=True)
+    # df_lung_overall.drop(['State-county recode_y','Sex_x','Sex_y', 'County','State'],axis=1, inplace=True)
 
 
     df_lung.drop(df_lung[pd.isnull(df_lung).any(axis=1)].index, inplace=True)

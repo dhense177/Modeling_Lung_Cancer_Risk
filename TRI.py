@@ -15,10 +15,10 @@ def concat(df_dict):
 def index_lookup(df_lung):
     lst = []
     for i in df_lung['State_and_county']:
-        if (i not in list(total_chems.COUNTY_ST.values)):
+        if (i not in list(total.COUNTY_ST.values)):
             lst.append(np.nan)
         else:
-            ind = list(total_chems.COUNTY_ST.values).index(i)
+            ind = list(total.COUNTY_ST.values).index(i)
             lst.append(ind)
     return lst
 
@@ -30,11 +30,11 @@ def add_chems(lst):
             if np.isnan(x):
                 new_list.append(np.nan)
             else:
-                new_list.append(total_chems.iloc[x][1:29][year])
+                new_list.append(total.iloc[x][1:29][year])
         arr.append(new_list)
 
     counter = 0
-    for yr in total_chems.iloc[1][1:28].index:
+    for yr in total.iloc[1][1:28].index:
         df_lung[str(yr)+"_chems"] = [i[counter] for i in arr]
         counter += 1
 
@@ -59,33 +59,46 @@ if __name__=='__main__':
         total = pickle.load(tmp)
         tmp.close()
 
-    total = total[total.CHEMICAL.isin(['ARSENIC','ARSENIC COMPOUNDS','ASBESTOS (FRIABLE)','CADMIUM','CADMIUM COMPOUNDS'])]
+    total = total[total.CARCINOGEN=='YES']
 
-    arsenic = pd.DataFrame(total[total.CHEMICAL=='ARSENIC'].groupby(['YEAR','COUNTY_ST'])['ON-SITE_RELEASE_TOTAL'].sum().reset_index())
-    arsenic_comp = pd.DataFrame(total[total.CHEMICAL=='ARSENIC COMPOUNDS'].groupby(['YEAR','COUNTY_ST'])['ON-SITE_RELEASE_TOTAL'].sum().reset_index())
-    asbestos = pd.DataFrame(total[total.CHEMICAL=='ASBESTOS (FRIABLE)'].groupby(['YEAR','COUNTY_ST'])['ON-SITE_RELEASE_TOTAL'].sum().reset_index())
+    total = pd.DataFrame(total.groupby(['YEAR','COUNTY_ST'])['ON-SITE_RELEASE_TOTAL'].sum().reset_index())
 
-    cadmium = pd.DataFrame(total[total.CHEMICAL=='CADMIUM'].groupby(['YEAR','COUNTY_ST'])['ON-SITE_RELEASE_TOTAL'].sum().reset_index())
-    cadmium_comp = pd.DataFrame(total[total.CHEMICAL=='CADMIUM COMPOUNDS'].groupby(['YEAR','COUNTY_ST'])['ON-SITE_RELEASE_TOTAL'].sum().reset_index())
+    total = total.pivot(index='COUNTY_ST',columns='YEAR',values='ON-SITE_RELEASE_TOTAL').reset_index()
+    #Drop columns with any Nans
+    total.drop(total[pd.isnull(total).any(axis=1)].index, inplace=True)
 
-
-
-    arsenic = arsenic.pivot(index='COUNTY_ST',columns='YEAR',values='ON-SITE_RELEASE_TOTAL').reset_index()
-
-    arsenic_comp = arsenic_comp.pivot(index='COUNTY_ST',columns='YEAR',values='ON-SITE_RELEASE_TOTAL').reset_index()
-
-    asbestos = asbestos.pivot(index='COUNTY_ST',columns='YEAR',values='ON-SITE_RELEASE_TOTAL').reset_index()
-
-    cadmium = cadmium.pivot(index='COUNTY_ST',columns='YEAR',values='ON-SITE_RELEASE_TOTAL').reset_index()
-
-    cadmium_comp = cadmium_comp.pivot(index='COUNTY_ST',columns='YEAR',values='ON-SITE_RELEASE_TOTAL').reset_index()
-
-    total_chems = pd.concat([arsenic, arsenic_comp, asbestos, cadmium, cadmium_comp])
-
-    df_lung = pd.read_csv('lung_dataframe.csv',converters={'Combined': lambda x: str(x),'State-county recode_x': lambda x: str(x)})
+    df_lung = pd.read_csv('lung_dataframe_overall.csv',converters={'Combined': lambda x: str(x),'State-county recode_x': lambda x: str(x)})
     lst = index_lookup(df_lung)
 
     add_chems(lst)
 
-    grouped_df = df_lung.groupby('State-county recode_x')[df_lung.columns].sum()
+    # total = total[total.CHEMICAL.isin(['ARSENIC','ARSENIC COMPOUNDS','ASBESTOS (FRIABLE)','CADMIUM','CADMIUM COMPOUNDS'])]
+
+    # arsenic = pd.DataFrame(total[total.CHEMICAL=='ARSENIC'].groupby(['YEAR','COUNTY_ST'])['ON-SITE_RELEASE_TOTAL'].sum().reset_index())
+    # arsenic_comp = pd.DataFrame(total[total.CHEMICAL=='ARSENIC COMPOUNDS'].groupby(['YEAR','COUNTY_ST'])['ON-SITE_RELEASE_TOTAL'].sum().reset_index())
+    # asbestos = pd.DataFrame(total[total.CHEMICAL=='ASBESTOS (FRIABLE)'].groupby(['YEAR','COUNTY_ST'])['ON-SITE_RELEASE_TOTAL'].sum().reset_index())
+    #
+    # cadmium = pd.DataFrame(total[total.CHEMICAL=='CADMIUM'].groupby(['YEAR','COUNTY_ST'])['ON-SITE_RELEASE_TOTAL'].sum().reset_index())
+    # cadmium_comp = pd.DataFrame(total[total.CHEMICAL=='CADMIUM COMPOUNDS'].groupby(['YEAR','COUNTY_ST'])['ON-SITE_RELEASE_TOTAL'].sum().reset_index())
+    #
+    #
+    #
+    # arsenic = arsenic.pivot(index='COUNTY_ST',columns='YEAR',values='ON-SITE_RELEASE_TOTAL').reset_index()
+    #
+    # arsenic_comp = arsenic_comp.pivot(index='COUNTY_ST',columns='YEAR',values='ON-SITE_RELEASE_TOTAL').reset_index()
+    #
+    # asbestos = asbestos.pivot(index='COUNTY_ST',columns='YEAR',values='ON-SITE_RELEASE_TOTAL').reset_index()
+    #
+    # cadmium = cadmium.pivot(index='COUNTY_ST',columns='YEAR',values='ON-SITE_RELEASE_TOTAL').reset_index()
+    #
+    # cadmium_comp = cadmium_comp.pivot(index='COUNTY_ST',columns='YEAR',values='ON-SITE_RELEASE_TOTAL').reset_index()
+    #
+    # total_chems = pd.concat([arsenic, arsenic_comp, asbestos, cadmium, cadmium_comp])
+    #
+    # df_lung = pd.read_csv('lung_dataframe.csv',converters={'Combined': lambda x: str(x),'State-county recode_x': lambda x: str(x)})
+    # lst = index_lookup(df_lung)
+    #
+    # add_chems(lst)
+    #
+    # grouped_df = df_lung.groupby('State-county recode_x')[df_lung.columns].sum()
     #grouped_df[grouped_df.isnull().any(axis=1)]

@@ -14,9 +14,9 @@ def frame(filepath):
     df_lung = df_lung[['Race/Ethnicity','Sex','Age at diagnosis', 'Year of diagnosis', 'Year of Birth','Race recode (White, Black, Other)','Race recode (W, B, AI, API)','Origin recode NHIA (Hispanic, Non-Hisp)','State-county recode']]
 
     #Create age buckets
-    df_lung.loc[ df_lung['Age at diagnosis'].apply(pd.to_numeric) <= 30, 'Age'] = '0'
-    df_lung.loc[(df_lung['Age at diagnosis'].apply(pd.to_numeric) > 30) & (df_lung['Age at diagnosis'].apply(pd.to_numeric) <= 60), 'Age'] = '1'
-    df_lung.loc[ df_lung['Age at diagnosis'].apply(pd.to_numeric) > 60, 'Age'] = '2'
+    df_lung.loc[ df_lung['Age at diagnosis'].apply(pd.to_numeric) <= 65, 'Age'] = '1'
+    #df_lung.loc[(df_lung['Age at diagnosis'].apply(pd.to_numeric) > 19) & (df_lung['Age at diagnosis'].apply(pd.to_numeric) <= 65), 'Age'] = '2'
+    df_lung.loc[ df_lung['Age at diagnosis'].apply(pd.to_numeric) > 65, 'Age'] = '2'
 
     #Turn all Race identifiers greater than 3 to category 3 (other)
     df_lung.loc[df_lung['Race recode (White, Black, Other)'].apply(pd.to_numeric)>3,'Race recode (White, Black, Other)']=3

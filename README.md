@@ -44,7 +44,7 @@ One step beyond this would be to assume that the states we are looking at are a 
 
 ## ***Data Sources***
 
-Other than the SEER cancer data used in these simple models, I have gathered county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. The data do not match up exactly in terms of years, but generally range from 1995-2010 (in order to get a sense for the lag time between certain behaviors/exposures and lung cancer diagnosis). The full list of data sources usedcan be found in data_dictionary.txt  
+Other than the SEER cancer data used in these simple models, I have gathered county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. The data do not match up exactly in terms of years, but generally range from 1995-2010 (in order to get a sense for the lag time between certain behaviors/exposures and lung cancer diagnosis). The full list of data sources used can be found in data_dictionary.txt  
 
 ### ***Cleaning & Standardization***
 

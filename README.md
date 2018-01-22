@@ -33,3 +33,9 @@ Given how different individual counties and states look from each other, option 
 
 
 ![](4counties.png)
+
+### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2000-2014
+
+These individual linear regression plots look pretty good - 3/4 of the counties display a linear trend in mean cancer rates. 
+
+However, the least squares fit lines do seem to overfit the county-level data by predicting more extreme results for 2014 than we see.

@@ -15,7 +15,7 @@ Data Sources: Refer to data_dictionary.txt
 
 It is evident that counties differ drastically in their risk for lung cancer - counties in Kentucky show incidence of 120 per 100,00, while counties in Iowa hover around 20 per 100,000, a 6x difference. 
 
-![](state_years.png)
+![](state_years2.png)
 
 ### Figure 2: State-wide mean lung cancer incidence per 100,000 between 2000-2014
 
@@ -32,7 +32,7 @@ Without introducing a hierarchical struture to the data, we have 3 options:
 Given how different individual counties and states look from each other, option 1 does not seem like it would produce good results. 
 
 
-![](4counties.png)
+![](4counties2.png)
 
 ### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2000-2014
 

@@ -11,4 +11,4 @@ Data Sources: Refer to data_dictionary.txt
 
 ![](counties3.png)
 
-## Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,00 between 2000-2013
+### Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,00 between 2000-2013

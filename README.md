@@ -9,4 +9,4 @@ Recently there has been increased focus on considering the interplay between man
 
 Data Sources: Refer to data_dictionary.txt
 
-![](county_incidence.png)
+![](counties2.png)

@@ -44,12 +44,16 @@ One step beyond this would be to assume that the states we are looking at are a 
 
 ## ***Data Sources***
 
-Other than the SEER cancer data used in these simple models, I have gathered county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. The full list of data sources usedcan be found in data_dictionary.txt  
+Other than the SEER cancer data used in these simple models, I have gathered county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. The data do not match up exactly in terms of years, but generally range from 1995-2010 (in order to get a sense for the lag time between certain behaviors/exposures and lung cancer diagnosis). The full list of data sources usedcan be found in data_dictionary.txt  
 
 ### ***Cleaning & Standardization***
 
 A considerable amount of time was spent cleaning and grouping the SEER data so that it could be joined with the other data sources mentioned above. 
 
 The only county-wide smoking data I could find were age standardized (according to U.S. census methodogy) and gender standardized (so that smoking percentages can be compared among counties without looking at the gender breakout and age structure of each county) . I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
+
+## ***Feature Selection***
+
+Once joining all my dataframes together, I had 200+ variables (~10-15 years of data for each feature chosen). I decided to first break this data down into 5-year averages so that it is a more manageable list. Then I grouped the data into categories of highly correlated features (smoking group: mean smoking 1996-2000, mean smoking 1996-2010, etc...). Lastly, I ran a simulation to find the best combination of variables from each of these groups with the lowest BIC score (Bayesian Information Criterion). I noticed high correlations between previous cancer incidence data and smoking data, as well as between AQI and ozone data. I tried multiple combinations of these different features summarized in the below table: 
 
 

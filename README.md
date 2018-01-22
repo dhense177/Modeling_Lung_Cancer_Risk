@@ -9,4 +9,4 @@ Recently there has been increased focus on considering the interplay between man
 
 Data Sources: Refer to data_dictionary.txt
 
-![](/home/davidhenslovitz/Galvanize/ZNAHealth/county_incidence.png)
+![](county_incidence.png)

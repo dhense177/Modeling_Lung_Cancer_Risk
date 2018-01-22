@@ -24,9 +24,9 @@ Not only do individual counties differ drastically from each other, but states a
 
 ### Basic Linear Regression
 Without introducing a hierarchical struture to the data, we have 3 options:
-1)Fully-Pooled: Forecast individual county 2014 lung cancer incidence through use of a single regression model for all counties
-2) State-Pooled: Forecast individual county 2014 lung cancer incidence through use of regression models for each state
-3) Unpooled: Forecast individual county 2014 lung cancer incidence by running separate regression on each individual county
+1. Fully-Pooled: Forecast individual county 2014 lung cancer incidence through use of a single regression model for all counties
+2. State-Pooled: Forecast individual county 2014 lung cancer incidence through use of regression models for each state
+3. Unpooled: Forecast individual county 2014 lung cancer incidence by running separate regression on each individual county
 
 
 Given how different individual counties and states look from each other, option 1 does not seem like it would produce good results. 

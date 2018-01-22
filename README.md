@@ -11,7 +11,7 @@ Recently there has been increased focus on considering the interplay between man
 
 ### Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,00 between 2000-2014
 
-It is evident that counties differ drastically in their risk for lung cancer - counties in Kentucky show incidence of 120 per 100,00, while counties in Iowa hover around 20 per 100,000, a 6x difference. 
+It is evident that counties differ drastically in their risk for lung cancer - counties in Kentucky show incidence of 120 per 100,00, while counties in Iowa and California hover around 30 per 100,000, a 4-fold difference. 
 
 ![](state_years2.png)
 
@@ -45,3 +45,11 @@ One step beyond this would be to assume that the states we are looking at are a 
 ## Data Sources
 
 Other than the SEER cancer data used in these simple models, I have gathered county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases, and air quality index values. The full list of data sources can be found in data_dictionary.txt  
+
+### Cleaning & Standardization
+
+A considerable amount of time was spent cleaning and grouping the SEER data so that it could be joined with the other data sources mentioned above. 
+
+The only county-wide smoking data I could find were age standardized (according to U.S. census methodogy) and gender standardized (so that smoking percentages can be compared among counties without looking at the gender breakout and age structure of each county) . I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
+
+

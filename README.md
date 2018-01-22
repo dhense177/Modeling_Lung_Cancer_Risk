@@ -11,8 +11,22 @@ Data Sources: Refer to data_dictionary.txt
 
 ![](counties3.png)
 
-### Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,00 between 2000-2013
+### Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,00 between 2000-2014
 
 It is evident that counties differ drastically in their risk for lung cancer - counties in Kentucky show incidence of 120 per 100,00, while counties in Iowa hover around 20 per 100,000, a 6x difference. 
 
 ![](state_years.png)
+
+### Figure 2: State-wide mean lung cancer incidence per 100,000 between 2000-2014
+
+Not only do individual counties differ drastically from each other, but states also display substantial differences in mean lung cancer incidence. 
+
+
+### Basic Linear Regression
+Without introducing a hierarchical struture to the data, we have 3 options:
+1)Fully-Pooled: Forecast individual county 2014 lung cancer incidence through use of a single regression model for all counties
+2) State-Pooled: Forecast individual county 2014 lung cancer incidence through use of regression models for each state
+3) Unpooled: Forecast individual county 2014 lung cancer incidence by running separate regression on each individual county
+
+
+Given how different individual counties and states look from each other, option 1 does not seem like it would produce good results. 

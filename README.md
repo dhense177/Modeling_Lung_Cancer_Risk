@@ -44,7 +44,7 @@ One step beyond this would be to assume that the states we are looking at are a 
 
 ## ***Data Sources***
 
-Other than the SEER cancer data used in these simple models, I have gathered county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases, and air quality index values. The full list of data sources can be found in data_dictionary.txt  
+Other than the SEER cancer data used in these simple models, I have gathered county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. The full list of data sources usedcan be found in data_dictionary.txt  
 
 ### ***Cleaning & Standardization***
 

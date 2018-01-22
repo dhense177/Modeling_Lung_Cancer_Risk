@@ -38,4 +38,8 @@ Given how different individual counties and states look from each other, option 
 
 These individual linear regression plots look pretty good - 3/4 of the counties display a linear trend in mean cancer rates. 
 
-However, the least squares fit lines do seem to overfit the county-level data by predicting more extreme results for 2014 than we see.
+However, the least squares fit lines do seem to overfit the county-level data by predicting more extreme results for 2014 than we see (King County, Wayne).
+
+Since states have distinct and different distribtions of mean lung cancer rates, it would make sense to improve upon this basic regression model by creating a hierarchical structure by which individual county regressions are constrained by a distribution of paramters (y-intercept and slope) which would result in regression lines that are less extreme and less likely to overfit. 
+
+One step beyond this would be to assume that the states we are looking at are a random sample from the U.S., and that the states themselves could be constrained by U.S.-level hyperparameters. 

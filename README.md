@@ -12,3 +12,5 @@ Data Sources: Refer to data_dictionary.txt
 ![](counties3.png)
 
 ### Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,00 between 2000-2013
+
+It is evident that counties differ drastically in their risk for lung cancer - counties in Kentucky show incidence of 120 per 100,00, while counties in Iowa hover around 20 per 100,000, a 6x difference. 

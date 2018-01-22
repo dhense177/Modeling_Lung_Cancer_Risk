@@ -30,3 +30,6 @@ Without introducing a hierarchical struture to the data, we have 3 options:
 
 
 Given how different individual counties and states look from each other, option 1 does not seem like it would produce good results. 
+
+
+![](4counties.png)

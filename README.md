@@ -7,7 +7,7 @@ Cancer is one of the leading causes of death both in the U.S. and worldwide, and
 Recently there has been increased focus on considering the interplay between many different health and environmental factors when determining risk for chronic diseases. For example, a heavy smoker exposed to bad air pollution is significantly more at risk for lung cancer than a heavy smoker not exposed to bad air pollution or a nonsmoker exposed to bad air pollution. By looking at a wide variety of the known variables related to lung cancer, one might be able to better predict the number of to-be diagnosed lung cancer cases per year at a local level (county-wide), providing healthcare professionals and policymakers with actionable insights (catching lung cancer early drastically increases chances of survival).
 
 
-![](counties3.png)
+![](Visuals/county_boxplot2.png.png)
 
 ### Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,00 between 2000-2014
 

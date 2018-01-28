@@ -175,10 +175,9 @@ if __name__=='__main__':
         combined.drop(combined[pd.isnull(combined).any(axis=1)].index, inplace=True)
         combined.drop(combined[combined['State-county recode_x']=='15005'].index,
         inplace=True)
-        
+
         combined_overall = combined_overall.replace(0,np.nan)
-        combined_overall.drop(combined_overall[pd.isnull(combined_overall).any(
-        axis=1)].index, inplace=True)
+        combined_overall.drop(combined_overall[pd.isnull(combined_overall).any(axis=1)].index, inplace=True)
 
         print("...saving pickle")
         tmp = open(rates_pickle,'wb')

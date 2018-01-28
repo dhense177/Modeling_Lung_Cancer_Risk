@@ -1,8 +1,10 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import os, pickle, csv
 import seaborn as sns
 from datetime import datetime
+from sklearn.mixture import GaussianMixture
 
 #Process dates and add a few columns
 def process(df):
@@ -44,37 +46,49 @@ def add_radon(lst, df_lung):
             newlist.append(grouped.iloc[x]['activity'])
     df_lung['radon_mean'] = newlist
 
-
+    df_lung.drop(df_lung[pd.isnull(df_lung).any(axis=1)].index, inplace=True)
+    #Adds Gaussian Components
+    gmm = GaussianMixture(n_components=2)
+    gmm = gmm.fit(df_lung[['radon_mean']])
+    results = gmm.predict_proba(df_lung[['radon_mean']])
+    df_lung['Prob_low_radon'] = [i[0] for i in results]
+    df_lung['Prob_high_radon'] = [i[1] for i in results]
 
 if __name__=='__main__':
-    df1 = pd.read_csv('http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/srrs1.dat')
-    df2 = pd.read_csv('http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/srrs2.dat')
-    df3 = pd.read_csv('http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/srrs3.dat')
-    df4 =  pd.read_csv('http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/srrs4.dat')
-    df5 = pd.read_csv('http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/srrs5.dat')
-
-    df = pd.concat([df1, df2, df3, df4, df5])
-    df.columns = df.columns.map(str.strip)
-
-    process(df)
-
-    #Using mean county-wide radon activity over years 1988-1992 due to data sparcity
-    grouped = pd.DataFrame(df.groupby(['State_and_county'])['activity'].mean()).reset_index()
 
 
-    df_lung = pd.read_csv('lung_dataframe.csv',converters={'Combined': lambda x: str(x),'State-county recode_x': lambda x: str(x)})
+    radon_pickle = 'radon.pickle'
+    if not os.path.isfile(radon_pickle):
+        df1 = pd.read_csv('http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/srrs1.dat')
+        df2 = pd.read_csv('http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/srrs2.dat')
+        df3 = pd.read_csv('http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/srrs3.dat')
+        df4 =  pd.read_csv('http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/srrs4.dat')
+        df5 = pd.read_csv('http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/srrs5.dat')
 
-    df_lung_overall = pd.read_csv('lung_dataframe_overall.csv',converters={'Combined': lambda x: str(x),'State-county recode_x': lambda x: str(x)})
+        df = pd.concat([df1, df2, df3, df4, df5])
+        df.columns = df.columns.map(str.strip)
+
+        process(df)
+
+        #Using mean county-wide radon activity over years 1988-1992 due to data sparcity
+        grouped = pd.DataFrame(df.groupby(['State_and_county'])['activity'].mean()).reset_index()
+        print("...saving pickle")
+        tmp = open(radon_pickle,'wb')
+        pickle.dump(grouped,tmp)
+        tmp.close()
+    else:
+        print("...loading pickle")
+        tmp = open(radon_pickle,'rb')
+        grouped = pickle.load(tmp)
+        tmp.close()
 
 
-    lst = index_lookup(df_lung)
-    add_radon(lst, df_lung)
+
+    df_lung_overall = pd.read_csv('lung.csv',converters={'Combined': lambda x: str(x),'State-county recode_x': lambda x: str(x)})
 
     lst_overall = index_lookup(df_lung_overall)
     add_radon(lst_overall, df_lung_overall)
 
-    df_lung.drop(df_lung[pd.isnull(df_lung).any(axis=1)].index, inplace=True)
-    df_lung.to_csv('lung_dataframe3.csv', index=False)
 
-    df_lung_overall.drop(df_lung_overall[pd.isnull(df_lung_overall).any(axis=1)].index, inplace=True)
-    df_lung_overall.to_csv('lung_dataframe_overall3.csv', index=False)
+    # df_lung_overall.drop(df_lung_overall[pd.isnull(df_lung_overall).any(axis=1)].index, inplace=True)
+    df_lung_overall.to_csv('lung_radon.csv', index=False)

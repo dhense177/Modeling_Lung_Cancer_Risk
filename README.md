@@ -1,4 +1,4 @@
-# Predicting Lung Cancer Rates in Select U.S. Counties
+# Modeling Lung Cancer Rates in Select U.S. Counties
 My Galvanize Capstone Project
 
 ## ***Motivation***

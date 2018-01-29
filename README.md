@@ -30,7 +30,7 @@ Without introducing a hierarchical struture to the data, we have 3 options:
 Given how different individual counties and states look from each other, option 1 does not seem like it would produce good results. 
 
 
-![](4counties4.png)
+![](Visuals/linear_fit.png)
 
 ### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2000-2014
 

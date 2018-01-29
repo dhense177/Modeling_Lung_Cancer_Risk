@@ -9,13 +9,13 @@ Recently there has been increased focus on considering the interplay between man
 
 ![](Visuals/county_boxplot3.png)
 
-### Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,00 between 2000-2014
+### Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,000 between 2001-2011
 
-It is evident that counties differ drastically in their risk for lung cancer - counties in Kentucky show incidence of 150 per 100,00, while counties in Iowa and California hover around 30 per 100,000, a 5-fold difference. 
+It is evident that counties differ drastically in their risk for lung cancer - counties in Kentucky show incidence of 150 per 100,00, while counties in California hover around 30 per 100,000, a 5-fold difference. 
 
 ![](Visuals/state_years2.png)
 
-### Figure 2: State-wide mean lung cancer incidence per 100,000 between 2000-2014
+### Figure 2: State-wide mean lung cancer incidence per 100,000 between 2001-2011
 
 Not only do individual counties differ drastically from each other, but states also display substantial differences in mean lung cancer incidence. 
 
@@ -24,7 +24,7 @@ Not only do individual counties differ drastically from each other, but states a
 Without introducing a hierarchical struture to the data, we have 3 options:
 1. Fully-Pooled: Forecast individual county 2014 lung cancer incidence through use of a single regression model for all counties
 2. State-Pooled: Forecast individual county 2014 lung cancer incidence through use of regression models for each state
-3. Unpooled: Forecast individual county 2014 lung cancer incidence by running separate regression on each individual county
+3. Unpooled: Forecast individual county 2014 lung cancer incidence by running separate regressions on each individual county
 
 
 Given how different individual counties and states look from each other, option 1 does not seem like it would produce good results. 
@@ -44,16 +44,16 @@ One step beyond this would be to assume that the states we are looking at are a 
 
 ## ***Data Sources***
 
-Other than the SEER cancer data used in these simple models, I have gathered county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. The data do not match up exactly in terms of years, but generally range from 1995-2010 (in order to get a sense for the lag time between certain behaviors/exposures and lung cancer diagnosis). The full list of data sources used can be found in data_dictionary.txt  
+I requested reasearch access to the NIH SEER Cancer Data, which comprises both cancer incidence and population data for several U.S. states from 1973-2014. I also found public county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. For this analysis I limited my time horizon to 2001-2011 due to the best data availability during this period. The full list of data sources used can be found in data_dictionary.txt  
 
 ### ***Cleaning & Standardization***
 
 A considerable amount of time was spent cleaning and grouping the SEER data so that it could be joined with the other data sources mentioned above. 
 
-The only county-wide smoking data I could find were age standardized (according to U.S. census methodogy) and gender standardized (so that smoking percentages can be compared among counties without looking at the gender breakout and age structure of each county) . I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
+The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodogy) so that adult smoking percentages can be compared among counties without looking at the role that gender age play in determining risk for lung cancer). I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
 
 ## ***Feature Selection***
 
-Once joining all my dataframes together, I had 200+ variables (~10-15 years of data for each feature chosen). I decided to first break this data down into 5-year averages so that it is a more manageable list. Then I grouped the data into categories of highly correlated features (smoking group: mean smoking 1996-2000, mean smoking 1996-2010, etc...). Lastly, I ran a simulation to find the best combination of variables from each of these groups with the lowest BIC score (Bayesian Information Criterion). I noticed high correlations between previous cancer incidence data and smoking data, as well as between AQI and ozone data. I tried multiple combinations of these different features summarized in the below table: 
+
 
 

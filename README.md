@@ -43,9 +43,19 @@ The only county-wide smoking data I could find were age and gender standardized 
 
 ## ***Feature Selection***
 
-When deciding which of the features to include in my models, I compared the Bayesian Information Criteria (BIC) scores of various Lasso regressions that I ran, each including a different set of predictors.
+When deciding which of the features to include in my models, I compared the Bayesian Information Criteria (BIC) scores of various Lasso regressions that I ran, each including a different set of predictors:
 
 ![](Visuals/BIC_table.png)
+
+### Table 1: Comparing feature sets using BIC scores
+
+The BIC score is able to help deal with the overfitting problem mentioned previously. The first component of the BIC, called the likelihood function, is a measure of goodness of fit between a model and the data. The more features you include in your model, the lower your likelihood function will be (the lower the better). The second component of BIC is the regularization parameter. This term penalizes models by the number of features included. So models containing extra features that don't add much information will show higher scores (worse).
+
+The model which minimizes the BIC is comprised of features:
+* Adult Daily Smoking % Estimates
+* Days of Harmful PM 2.5 levels
+* Air Quality Index levels
+* Mean Radon levels 
 
 ## ***Simple Linear Regression***
 

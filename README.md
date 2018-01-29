@@ -45,6 +45,7 @@ The only county-wide smoking data I could find were age and gender standardized 
 
 
 
+
 ## ***Simple Linear Regression***
 
 Without introducing a hierarchical struture to the data, we have 3 options:
@@ -59,13 +60,11 @@ I tried both fully-pooled and unpooled models, and chose to evaluate model perfo
 
 A lower RMSE value is desired. The fully-pooled model had an RMSE of 18.6, and the unpooled an RMSE of 10.3. Relative to the mean lung cancer incidence of ~70 for all counties, the unpooled model wasn't bad. But clearly the fully-pooled model is not a good option.
 
-
-
 ![](Visuals/predictions3.png)
 
 ### Figure 4: Unpooled estimates vs. actual mean lung cancer incidence per county
 
-This plot shows that the unpooled model does a very good job of estimating the mean incidence per county. But how good is it at generalizing to future years or to other counties? Probably not so well. Both counties and states share many similarites that would explain lung cancer incidence, including smoking prevention initiatives and air quality standards. This information could be very useful when forecasting county-wide incidence, but the unpooled model does not take it into account. Therefore, in order to improve upon these baseline models, I chose to try two different multilevel regression models which incorporate specified group similarities into model parameter estimates. 
+This plot shows that the unpooled model does a very good job of estimating the mean incidence per county. But how good is it at generalizing to future years or to other counties? Probably not so well. Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my model, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to try two different multilevel regression models which help control for these confounding variables.
 
 
 

@@ -39,11 +39,11 @@ I requested research access to the NIH SEER Cancer Data, which comprises both ca
 
 A considerable amount of time was spent cleaning and grouping the SEER data so that it could be joined with the other data sources mentioned above. 
 
-The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodogy) so that adult smoking percentages can be compared among counties without looking at the role that gender age play in determining risk for lung cancer). I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
+The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodogy) so that adult smoking percentages can be compared among counties without looking at the role that gender and age play in determining risk for lung cancer. I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
 
 ## ***Feature Selection***
 
-
+When deciding which of the features to include in my models, I compared the Bayesian Information Criteria (BIC) scores of various Lasso regressions that I ran, each including a different set of predictors. 
 
 
 ## ***Simple Linear Regression***

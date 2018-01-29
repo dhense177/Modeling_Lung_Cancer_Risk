@@ -11,13 +11,13 @@ Recently there has been increased focus on considering the interplay between man
 
 ### Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,000 between 2001-2011
 
-It is evident that counties differ drastically in their risk for lung cancer - counties in Kentucky show incidence of 150 per 100,00, while counties in California hover around 30 per 100,000, a 5-fold difference. 
+It is evident that counties differ drastically in their risk for lung cancer - counties in Kentucky show incidence of 150 per 100,00, while counties in California hover around 30 per 100,000, a 5-fold difference.
 
 ![](Visuals/state_years2.png)
 
 ### Figure 2: State-wide mean lung cancer incidence per 100,000 between 2001-2011
 
-Not only do individual counties differ drastically from each other, but states also display substantial differences in mean lung cancer incidence. 
+Not only do individual counties differ drastically from each other, but states also display substantial differences in mean lung cancer incidence.
 
 
 ## ***Least Squares Fitting***
@@ -32,19 +32,20 @@ Although the least squares lines look like they do a good job of explaining inci
 
 ## ***Data Sources***
 
-I requested research access to the NIH SEER Cancer Data, which comprises both cancer incidence and population data for several U.S. states from 1973-2014. I also found public county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. For this analysis I limited my time horizon to 2001-2011 due to the best data availability during this period. The full list of data sources used can be found in data_dictionary.txt 
+I requested research access to the NIH SEER Cancer Data, which comprises both cancer incidence and population data for several U.S. states from 1973-2014. I also found public county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. For this analysis I limited my time horizon to 2001-2011 due to the best data availability during this period. The full list of data sources used can be found in data_dictionary.txt
 
 
 ### ***Cleaning & Standardization***
 
-A considerable amount of time was spent cleaning and grouping the SEER data so that it could be joined with the other data sources mentioned above. 
+A considerable amount of time was spent cleaning and grouping the SEER data so that it could be joined with the other data sources mentioned above.
 
 The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodogy) so that adult smoking percentages can be compared among counties without looking at the role that gender and age play in determining risk for lung cancer. I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
 
 ## ***Feature Selection***
 
-When deciding which of the features to include in my models, I compared the Bayesian Information Criteria (BIC) scores of various Lasso regressions that I ran, each including a different set of predictors. 
+When deciding which of the features to include in my models, I compared the Bayesian Information Criteria (BIC) scores of various Lasso regressions that I ran, each including a different set of predictors.
 
+![](Visuals/BIC_table.png)
 
 ## ***Simple Linear Regression***
 
@@ -65,12 +66,3 @@ A lower RMSE value is desired. The fully-pooled model had an RMSE of 18.6, and t
 ### Figure 4: Unpooled estimates vs. actual mean lung cancer incidence per county
 
 This plot shows that the unpooled model does a very good job of estimating the mean incidence per county. But how good is it at generalizing to future years or to other counties? Probably not great. Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my model, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to try two different multilevel regression models which help control for these confounding variables.
-
-
-
- 
-
-
-
-
-

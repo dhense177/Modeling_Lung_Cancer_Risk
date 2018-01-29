@@ -20,39 +20,56 @@ It is evident that counties differ drastically in their risk for lung cancer - c
 Not only do individual counties differ drastically from each other, but states also display substantial differences in mean lung cancer incidence. 
 
 
-## ***Basic Linear Regression***
+## ***Least Squares Fitting***
+
+![](Visuals/linear_fit.png)
+
+### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2001-2011
+
+These individual linear best fit lines look pretty good. Linear modeling should produce good results.
+
+Although the least squares lines look like they do a good job of explaining incidence over time in different counties, they are surely overfitting and the predictions generated from such a model would not generalize to other counties/future years.
+
+## ***Data Sources***
+
+I requested research access to the NIH SEER Cancer Data, which comprises both cancer incidence and population data for several U.S. states from 1973-2014. I also found public county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. For this analysis I limited my time horizon to 2001-2011 due to the best data availability during this period. The full list of data sources used can be found in data_dictionary.txt 
+
+
+### ***Cleaning & Standardization***
+
+A considerable amount of time was spent cleaning and grouping the SEER data so that it could be joined with the other data sources mentioned above. 
+
+The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodogy) so that adult smoking percentages can be compared among counties without looking at the role that gender and age play in determining risk for lung cancer. I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
+
+## ***Feature Selection***
+
+When deciding which of the features to include in my models, I compared the Bayesian Information Criteria (BIC) scores of various Lasso regressions that I ran, each including a different set of predictors. 
+
+
+## ***Simple Linear Regression***
+
 Without introducing a hierarchical struture to the data, we have 3 options:
 1. Fully-Pooled: Forecast individual county 2014 lung cancer incidence through use of a single regression model for all counties
 2. State-Pooled: Forecast individual county 2014 lung cancer incidence through use of regression models for each state
 3. Unpooled: Forecast individual county 2014 lung cancer incidence by running separate regressions on each individual county
 
 
-Given how different individual counties and states look from each other, option 1 does not seem like it would produce good results. 
+I tried both fully-pooled and unpooled models, and chose to evaluate model performance on Root Mean Square Error (RMSE), a measure of the standard deviation of model predictions from actual values:
+
+![](Visuals/RMSE.png)
+
+A lower RMSE value is desired. The fully-pooled model had an RMSE of 18.6, and the unpooled an RMSE of 10.3. Relative to the mean lung cancer incidence of ~70 for all counties, the unpooled model wasn't bad. But clearly the fully-pooled model is not a good option.
+
+![](Visuals/predictions3.png)
+
+### Figure 4: Unpooled estimates vs. actual mean lung cancer incidence per county
+
+This plot shows that the unpooled model does a very good job of estimating the mean incidence per county. But how good is it at generalizing to future years or to other counties? Probably not great. Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my model, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to try two different multilevel regression models which help control for these confounding variables.
 
 
-![](Visuals/linear_fit.png)
 
-### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2000-2014
+ 
 
-These individual linear regression plots look pretty good - 3/4 of the counties display a linear trend in mean cancer rates. 
-
-However, the least squares fit lines do seem to overfit the county-level data by predicting more extreme results for 2014 than we see (King County, Wayne).
-
-Since states have distinct and different distribtions of mean lung cancer rates, it would make sense to improve upon this basic regression model by creating a hierarchical structure by which individual county regressions are constrained by a distribution of paramters (y-intercept and slope) which would result in regression lines that are less extreme and less likely to overfit. 
-
-One step beyond this would be to assume that the states we are looking at are a random sample from the U.S., and that the states themselves could be constrained by U.S.-level hyperparameters. 
-
-## ***Data Sources***
-
-I requested reasearch access to the NIH SEER Cancer Data, which comprises both cancer incidence and population data for several U.S. states from 1973-2014. I also found public county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. For this analysis I limited my time horizon to 2001-2011 due to the best data availability during this period. The full list of data sources used can be found in data_dictionary.txt  
-
-### ***Cleaning & Standardization***
-
-A considerable amount of time was spent cleaning and grouping the SEER data so that it could be joined with the other data sources mentioned above. 
-
-The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodogy) so that adult smoking percentages can be compared among counties without looking at the role that gender age play in determining risk for lung cancer). I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
-
-## ***Feature Selection***
 
 
 

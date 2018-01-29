@@ -106,7 +106,7 @@ Since I was limited by data availability for many of the variables I used, there
 
 ## ***Future Direction***
 
-To address the issue above, my next step would be to combine the strengths of both the state-level and county-level hierarchical models. I could try only using the state-level models on counties where there are is sufficient data on other counties in the same state.
+To address the issue above, my next step would be to combine the strengths of both the state-level and county-level hierarchical models. I could try only using the state-level models on counties where there is sufficient data on other counties in the same state.
 
 I would also like to try analyzing other data that is related to lung cancer incidence (socioeconomic, other health factors).
 

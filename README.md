@@ -53,7 +53,7 @@ The BIC score is able to help deal with the overfitting problem mentioned previo
 
 The model which minimizes the BIC is comprised of features:
 * Adult Daily Smoking % Estimates
-* Days of Harmful PM 2.5
+* Days of Harmful PM 2.5 Levels
 * Air Quality Index Levels
 * Mean Radon Levels
 
@@ -89,3 +89,11 @@ I tried 2 multilevel models, differing by the group distributions specified. The
 ![](Visuals/multilevel_comparison.png)
 
 ### Figure 5: Point estimates and 95% Confidence Intervals for Multilevel Models
+
+Comparing RMSE between the two models:
+State-Level: 13.0
+County-Level: 7.7
+
+Overall I obtained the best results by grouping all counties together to form a prior distribution. Lets take a look at a few counties to get a better sense for what is going on.
+
+![](Visuals/Example_counties.png)

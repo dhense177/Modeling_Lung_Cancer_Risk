@@ -21,6 +21,19 @@ Not only do individual counties differ drastically from each other, but states a
 
 
 ## ***Basic Linear Regression***
+
+![](Visuals/linear_fit.png)
+
+### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2001-2011
+
+These individual linear best fit lines look pretty good. Linear modeling should produce good results.
+
+Although the least squares fit lines look like they do a good job of explaining incidence over time in different counties, they are surely overfitting and the predictions generated from such a model would not generalize to other counties/future years.
+
+Since states have distinct and different distribtions of mean lung cancer rates, it would make sense to improve upon this basic regression model by creating a hierarchical structure by which individual county regressions are constrained by a distribution of paramters (y-intercept and slope) which would result in regression lines that are less extreme and less likely to overfit. 
+
+One step beyond this would be to assume that the states we are looking at are a random sample from the U.S., and that the states themselves could be constrained by U.S.-level hyperparameters. 
+
 Without introducing a hierarchical struture to the data, we have 3 options:
 1. Fully-Pooled: Forecast individual county 2014 lung cancer incidence through use of a single regression model for all counties
 2. State-Pooled: Forecast individual county 2014 lung cancer incidence through use of regression models for each state
@@ -28,19 +41,6 @@ Without introducing a hierarchical struture to the data, we have 3 options:
 
 
 Given how different individual counties and states look from each other, option 1 does not seem like it would produce good results. 
-
-
-![](Visuals/linear_fit.png)
-
-### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2001-2011
-
-These individual linear best fit lines look pretty good. 
-
-However, the least squares fit lines do seem to overfit the county-level data by predicting more extreme results for 2014 than we see (King County, Wayne).
-
-Since states have distinct and different distribtions of mean lung cancer rates, it would make sense to improve upon this basic regression model by creating a hierarchical structure by which individual county regressions are constrained by a distribution of paramters (y-intercept and slope) which would result in regression lines that are less extreme and less likely to overfit. 
-
-One step beyond this would be to assume that the states we are looking at are a random sample from the U.S., and that the states themselves could be constrained by U.S.-level hyperparameters. 
 
 ## ***Data Sources***
 

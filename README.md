@@ -81,6 +81,8 @@ This plot shows that the unpooled model does a very good job of estimating the m
 
 Multilevel, or hierarchical regression techniques are a compromise between the pooled and unpooled methods. This approach assumes that while the coefficients (y-intercept, slope terms) are different for each county, they all come from a common group distribution ("prior").
 
+![](Visuals/multilevel_formula.png)
+
 This type of parameter estimation is core to Bayesian Statistics. While
 frequentist methods assume that model coefficients are always fixed, Bayesian methods try to estimate the coefficients using sampling techniques such as the Markov Chain Monte Carlo algorithm (which I used).
 

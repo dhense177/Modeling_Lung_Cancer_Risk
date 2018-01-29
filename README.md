@@ -99,3 +99,17 @@ Overall I obtained the best results by grouping all counties together to form a 
 ![](Visuals/Example_counties.png)
 
 Lets use Warren County, KY as an example. Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower incidence ~80-85, the dark green line is shifted upwards towards the group mean. The dark blue line, however, fits the local data very well and is closer to the overall mean for counties in my dataset ~70 per 100,000. It is clear from these plots that the County-Level model produces point estimates and 95% confidence intervals that fit the data much better than the state-grouped approach, evident by the model's significantly lower RMSE.
+
+### ***Caveat***
+
+Since I was limited by data availability for many of the variables I used, there are some states with very few counties in my dataset. For example, I only have data on 3 counties in Michigan, even though there are 83 in the state. Using the state-level hierarchical model, counties in these states are highly influenced by only a few other counties in the same state, which may be why this model underperforms the baseline unpooled model.
+
+## ***Future Direction***
+
+To address the issue above, my next step would be to combine the strengths of both the state-level and county-level hierarchical models. I could try only using the state-level models on counties where there are is sufficient data on other counties in the same state.
+
+I would also like to try analyzing other data that is related to lung cancer incidence (socioeconomic, other health factors).
+
+In addition to standardizing the data by age and gender, it would be helpful to standardize by race/ethnicity as well, since this is another confounding variable that explains differences in incidence.
+
+Lastly, in order to build a strong predictive model that could generalize well to other counties/years, it would be necessary to obtain unaggregated healthcare data with many more data points per county.

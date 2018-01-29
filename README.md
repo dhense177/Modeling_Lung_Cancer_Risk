@@ -53,16 +53,16 @@ The BIC score is able to help deal with the overfitting problem mentioned previo
 
 The model which minimizes the BIC is comprised of features:
 * Adult Daily Smoking % Estimates
-* Days of Harmful PM 2.5 levels
-* Air Quality Index levels
-* Mean Radon levels 
+* Days of Harmful PM 2.5
+* Air Quality Index Levels
+* Mean Radon Levels
 
 ## ***Simple Linear Regression***
 
 Without introducing a hierarchical struture to the data, we have 3 options:
-1. Fully-Pooled: Forecast individual county 2014 lung cancer incidence through use of a single regression model for all counties
-2. State-Pooled: Forecast individual county 2014 lung cancer incidence through use of regression models for each state
-3. Unpooled: Forecast individual county 2014 lung cancer incidence by running separate regressions on each individual county
+1. Fully-Pooled: Model 2001-2011 lung cancer incidence through use of a single regression model for all counties
+2. State-Pooled: Model 2001-2011 lung cancer incidence through use of separate regression models for each state
+3. Unpooled: Model 2001-2011 lung cancer incidence by running separate regression models on each individual county
 
 
 I tried both fully-pooled and unpooled models, and chose to evaluate model performance on Root Mean Square Error (RMSE), a measure of the standard deviation of model predictions from actual values:
@@ -76,3 +76,7 @@ A lower RMSE value is desired. The fully-pooled model had an RMSE of 18.6, and t
 ### Figure 4: Unpooled estimates vs. actual mean lung cancer incidence per county
 
 This plot shows that the unpooled model does a very good job of estimating the mean incidence per county. But how good is it at generalizing to future years or to other counties? Probably not great. Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my model, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to try two different multilevel regression models which help control for these confounding variables.
+
+## ***Multilevel Regression***
+
+![](Visuals/multilevel_comparison.png)

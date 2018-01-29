@@ -97,3 +97,5 @@ County-Level: 7.7
 Overall I obtained the best results by grouping all counties together to form a prior distribution. Lets take a look at a few counties to get a better sense for what is going on.
 
 ![](Visuals/Example_counties.png)
+
+Lets use Warren County, KY as an example. Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower incidence ~80-85, the dark green line is shifted upwards towards the group mean. The dark blue line, however, fits the local data very well and is closer to the overall mean for counties in my dataset ~70 per 100,000. It is clear from these plots that the County-Level model produces point estimates and 95% confidence intervals that fit the data much better than the state-grouped approach, evident by the model's significantly lower RMSE.

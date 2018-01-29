@@ -64,7 +64,7 @@ A lower RMSE value is desired. The fully-pooled model had an RMSE of 18.6, and t
 
 ### Figure 4: Unpooled estimates vs. actual mean lung cancer incidence per county
 
-This plot shows that the unpooled model does a very good job of estimating the mean incidence per county. But how good is it at generalizing to future years or to other counties? Probably not so well. Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my model, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to try two different multilevel regression models which help control for these confounding variables.
+This plot shows that the unpooled model does a very good job of estimating the mean incidence per county. But how good is it at generalizing to future years or to other counties? Probably not great. Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my model, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to try two different multilevel regression models which help control for these confounding variables.
 
 
 

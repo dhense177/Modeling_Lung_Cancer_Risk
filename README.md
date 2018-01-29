@@ -45,7 +45,7 @@ The only county-wide smoking data I could find were age and gender standardized 
 
 When deciding which of the features to include in my models, I compared the Bayesian Information Criteria (BIC) scores of various Lasso regressions that I ran, each including a different set of predictors:
 
-![](Visuals/BIC_table.png)
+![](Visuals/BIC_table2.png)
 
 ### Table 1: Comparing feature sets using BIC scores
 

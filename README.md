@@ -9,13 +9,13 @@ Recently there has been increased focus on considering the interplay between man
 
 ![](Visuals/county_boxplot3.png)
 
-### Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,000 between 2001-2011
+### Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,000 people between 2001-2011
 
 It is evident that counties differ drastically in their risk for lung cancer - counties in Kentucky show incidence of 150 per 100,00, while counties in California hover around 30 per 100,000, a 5-fold difference.
 
-![](Visuals/state_cancer2.png)
+![](Visuals/state_rates.png)
 
-### Figure 2: State-wide mean lung cancer incidence per 100,000 between 2001-2011
+### Figure 2: State-wide mean lung cancer incidence per 100,000 people between 2001-2011
 
 Not only do individual counties differ drastically from each other, but states also display substantial differences in mean lung cancer incidence.
 
@@ -75,7 +75,7 @@ A lower RMSE value is desired. The fully-pooled model had an RMSE of 18.6, and t
 
 ### Figure 4: Unpooled estimates vs. actual mean lung cancer incidence per county
 
-This plot shows that the unpooled model does a very good job of estimating the mean incidence per county. But how good is it at generalizing to future years or to other counties? Probably not great. Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my model, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to focus on multilevel regression which helps control for these confounding variables.
+This plot shows that the unpooled model does a very good job of estimating the mean incidence per county. But how good is it at generalizing to future years or to other counties? Probably not great. Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my model, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to focus on multilevel regression which helps control for confounding variables.
 
 ## ***Multilevel Regression***
 
@@ -88,19 +88,27 @@ frequentist methods assume that model coefficients are always fixed, Bayesian me
 
 I tried 2 multilevel models, differing by the group distributions specified. The first used state-level grouping, so that the prior distribution for each county is made up of all other counties in that state. The second grouped all counties together to create a prior distribution.
 
-![](Visuals/multilevel_comparison.png)
-
-### Figure 5: Point estimates and 95% Confidence Intervals for Multilevel Models
 
 Comparing RMSE between the two models:
 1. State-Level: 13.0
 2. County-Level: 7.7
 
-Overall I obtained the best results by grouping all counties together to form a prior distribution. Lets take a look at a few counties to get a better sense for what is going on.
+Overall I obtained the best results by grouping all counties together to form a prior distribution. Lets take a look at Warren County, KY to get a better sense for the difference between these 2 models:
 
-![](Visuals/Example_counties.png)
+![](Visuals/hier_counties13.png)
 
-Lets use Warren County, KY as an example. Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower incidence ~80-85, the dark green line is shifted upwards towards the group mean. The dark blue line, however, fits the local data very well and is closer to the overall mean for counties in my dataset ~70 per 100,000. It is clear from these plots that the County-Level model produces point estimates and 95% confidence intervals that fit the data much better than the state-grouped approach, evident by the model's significantly lower RMSE.
+Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower incidence ~80-85, the dark green line is shifted upwards towards the group mean. The dark blue line, however, fits the local data very well and is closer to the overall mean for counties in my dataset ~70 per 100,000.
+
+Looking at plots from a few other counties:
+
+
+It is clear from these plots that the County-Level model produces point estimates and 95% confidence intervals that fit the data much better than the state-grouped approach, evident by the model's significantly lower RMSE.
+
+Looking at these point estimates and 95% confidence intervals across all counties:
+
+![](Visuals/multilevel_comparison.png)
+
+### Figure 5: Point estimates and 95% Confidence Intervals for Multilevel Models
 
 ### ***Caveat***
 

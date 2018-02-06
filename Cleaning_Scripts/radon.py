@@ -55,10 +55,10 @@ def add_radon(lst, df_lung):
     df_lung['Prob_high_radon'] = [i[1] for i in results]
 
 if __name__=='__main__':
-
+    filepath = '/home/davidhenslovitz/Galvanize/ZNAHealth/'
 
     radon_pickle = 'radon.pickle'
-    if not os.path.isfile(radon_pickle):
+    if not os.path.isfile(filepath+radon_pickle):
         df1 = pd.read_csv('http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/srrs1.dat')
         df2 = pd.read_csv('http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/srrs2.dat')
         df3 = pd.read_csv('http://www.stat.columbia.edu/~gelman/arm/examples/radon_complete/srrs3.dat')
@@ -73,22 +73,22 @@ if __name__=='__main__':
         #Using mean county-wide radon activity over years 1988-1992 due to data sparcity
         grouped = pd.DataFrame(df.groupby(['State_and_county'])['activity'].mean()).reset_index()
         print("...saving pickle")
-        tmp = open(radon_pickle,'wb')
+        tmp = open(filepath+radon_pickle,'wb')
         pickle.dump(grouped,tmp)
         tmp.close()
     else:
         print("...loading pickle")
-        tmp = open(radon_pickle,'rb')
+        tmp = open(filepath+radon_pickle,'rb')
         grouped = pickle.load(tmp)
         tmp.close()
 
 
 
-    df_lung_overall = pd.read_csv('lung.csv',converters={'Combined': lambda x: str(x),'State-county recode_x': lambda x: str(x)})
+    df_lung_overall = pd.read_csv(filepath+'lung.csv',converters={'Combined': lambda x: str(x),'State-county recode_x': lambda x: str(x)})
 
     lst_overall = index_lookup(df_lung_overall)
     add_radon(lst_overall, df_lung_overall)
 
 
     # df_lung_overall.drop(df_lung_overall[pd.isnull(df_lung_overall).any(axis=1)].index, inplace=True)
-    df_lung_overall.to_csv('lung_radon.csv', index=False)
+    df_lung_overall.to_csv(filepath+'lung_radon.csv', index=False)

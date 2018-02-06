@@ -40,8 +40,9 @@ def add_chems(lst):
         df_lung_overall[str(yr)+"_chems"] = [i[counter] for i in arr]
         counter += 1
 
-#Pivots dataframe by Year
+#Groups all carcinogens together, sums up quantites (almost all in pounds)
 def group(total):
+    total = total[total.CARCINOGEN=='YES']
     total = total[total.YEAR>1995]
     total = pd.DataFrame(total.groupby(['YEAR','COUNTY_ST'])['ON-SITE_RELEASE_TOTAL'].sum().reset_index())
     total['State_and_county'] = total['COUNTY_ST']
@@ -50,40 +51,38 @@ def group(total):
     return total
 
 if __name__=='__main__':
-    filepath = '/home/davidhenslovitz/Galvanize/ZNAHealth/EPA_TRI/'
-    x = os.listdir(path=filepath)
+    filepath = '/home/davidhenslovitz/Galvanize/ZNAHealth/'
+    x = os.listdir(path=filepath+'Data_Files/EPA_TRI/')
 
     tri_pickle = 'tri.pickle'
 
-    if not os.path.isfile(tri_pickle):
+    if not os.path.isfile(filepath+tri_pickle):
         df_dict = {}
         for textfile in x:
             df_dict['df_'+textfile[6:8]] = pd.read_csv(filepath+textfile)
         total = concat(df_dict)
         print("...saving pickle")
-        tmp = open(tri_pickle,'wb')
+        tmp = open(filepath+tri_pickle,'wb')
         pickle.dump(total,tmp)
         tmp.close()
     else:
         print("...loading pickle")
-        tmp = open(tri_pickle,'rb')
+        tmp = open(filepath+tri_pickle,'rb')
         total = pickle.load(tmp)
         tmp.close()
-
-    total = total[total.CARCINOGEN=='YES']
 
     total = group(total)
 
     #Drop columns with any Nans
     total.drop(total[pd.isnull(total).any(axis=1)].index, inplace=True)
 
-    df_lung_overall = pd.read_csv('lung_aqi.csv',converters={'Combined': lambda x: str(x),'State-county recode_x': lambda x: str(x)})
+    df_lung_overall = pd.read_csv(filepath+'lung_aqi.csv',converters={'Combined': lambda x: str(x),'State-county recode_x': lambda x: str(x)})
     lst = index_lookup(df_lung_overall)
 
-    #add_chems(lst)
     df_lung_overall = pd.merge(df_lung_overall, total, how='left', on=['State_and_county','year'])
 
+    #Drop nulls
     df_lung_overall.drop(df_lung_overall[pd.isnull(df_lung_overall).any(axis=1)].index, inplace=True)
 
-
-    df_lung_overall.to_csv('lung_tri.csv', index=False)
+    #Export to csv
+    df_lung_overall.to_csv(filepath+'lung_tri.csv', index=False)

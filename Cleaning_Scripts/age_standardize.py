@@ -29,7 +29,7 @@ if __name__=='__main__':
         combined_overall = pickle.load(tmp)
         tmp.close()
 
-        combined2 = pd.merge(combined, combined_overall.iloc[:,16:32], how='left', on='State-county recode_x',)
+        combined2 = pd.merge(combined, combined_overall.iloc[:,16:32], how='left', on='State-county recode_x')
         age_rates(combined2)
 
         #grouped by county

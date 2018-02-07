@@ -30,23 +30,6 @@ def adjust_fips(fips, df_both):
     return lst
 
 
-#Adds air quality data to lung dataframes
-def add_air(lst, df_lung, df_pm2new, name):
-    arr = []
-    for x in lst:
-        new_list = []
-        for col in df_pm2new.columns:
-            if np.isnan(x):
-                new_list.append(np.nan)
-            else:
-                new_list.append(df_pm2new.iloc[x][col])
-        arr.append(new_list)
-
-    counter = 0
-    for col in df_pm2new.columns:
-        df_lung[str(col)+name] = [i[counter] for i in arr]
-        counter += 1
-
 #Adjusts smoking dataframe
 def smoking_changes(df):
     df_overall = df[df.Sex=='Both']

@@ -72,26 +72,13 @@ def group_pop_overall(df):
     return pop_final
 
 
-#Creates 2 age bins (<65 and >65)
-def agebins(processed):
-    bins = [0, 14, 18]
-    labels = [1,2]
-    processed['Age'] = pd.cut(processed['Age'].astype(int),bins=bins, labels=labels)
-    processed.Age = processed.Age.fillna(1)
-    processed.Age = processed.Age.astype(str)
-
-
-def col_changes(df_new):
-    df_new.columns = clean_df.columns
-    df_new['State-county recode']=df_new['State FIPS'].apply(lambda x: str(x).zfill(2))+df_new['County FIPS'].apply(lambda x: str(x).zfill(3))
-    df_new.Population = df_new.Population.apply(pd.to_numeric)
-
 
 
 if __name__=='__main__':
+    filepath = '/home/davidhenslovitz/Galvanize/ZNAHealth/'
+
     print("...loading pickle")
     framed_pickle = 'framed.pickle'
-    filepath = '/home/davidhenslovitz/Galvanize/ZNAHealth/'
     tmp = open(filepath+framed_pickle,'rb')
     total = pickle.load(tmp)
     tmp.close()
@@ -100,22 +87,11 @@ if __name__=='__main__':
     rates_pickle = 'rates.pickle'
     rates_overall_pickle = 'rates_overall.pickle'
 
-    if not os.path.isfile(filepath+pop_pickle):
-        processed = pd.read_csv(filepath+'population.csv', names=clean_df.columns)
-        processed = processed.drop(processed.index[0])
-        col_changes(processed)
-        agebins(processed)
 
-
-        print("...saving pickle")
-        tmp = open(pop_pickle,'wb')
-        pickle.dump(processed,tmp)
-        tmp.close()
-    else:
-        print("...loading pickle")
-        tmp = open(pop_pickle,'rb')
-        processed = pickle.load(tmp)
-        tmp.close()
+    print("...loading pickle")
+    tmp = open(filepath+pop_pickle,'rb')
+    processed = pickle.load(tmp)
+    tmp.close()
 
 
     if not os.path.isfile(filepath+rates_overall_pickle):

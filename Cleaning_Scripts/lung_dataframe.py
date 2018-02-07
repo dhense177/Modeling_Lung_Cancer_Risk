@@ -15,7 +15,6 @@ def frame(filepath):
 
     #Create age buckets
     df_lung.loc[ df_lung['Age at diagnosis'].apply(pd.to_numeric) <= 65, 'Age'] = '1'
-    #df_lung.loc[(df_lung['Age at diagnosis'].apply(pd.to_numeric) > 19) & (df_lung['Age at diagnosis'].apply(pd.to_numeric) <= 65), 'Age'] = '2'
     df_lung.loc[ df_lung['Age at diagnosis'].apply(pd.to_numeric) > 65, 'Age'] = '2'
 
     #Turn all Race identifiers greater than 3 to category 3 (other)

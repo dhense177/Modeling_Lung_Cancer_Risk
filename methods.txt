@@ -9,7 +9,7 @@ Part 3: Modeling
 
 Part 1
 
-Files: cancerdata3.py, lung_dataframe.py, population.py, cancer_rates.py, age_standardize.py
+Scripts: cancerdata3.py, lung_dataframe.py, population.py, cancer_rates.py, age_standardize.py
 
 cancerdata3.py parses the SEER cancer incidence data and exports a dataframe with all respiratory cancer cases to RESPIR.csv. Since this data is not public (research document must be signed) I have not included the raw data files here.
 
@@ -25,7 +25,7 @@ age_standardize.py joins the countywide population figures from combined_overall
 Part 2
 
 Scripts: join_smoking_air.py, radon.py, AQI.py, TRI.py
-Files:
+
 
 join_smoking_air.py reads in smoking estimates data and air quality data from the Health Tracking Network. The smoking estimates data comprises estimates of  % adult smokers (both daily and non-daily) per county. The air quality data comprises a number of metrics. I chose to include two variables: average concentrations of PM 2.5 and Days of Ozone above the National Quality Standard.
 
@@ -39,3 +39,5 @@ TRI.py reads in the EPA Toxic Release Inventory (TRI) data. This data is volunta
 
 
 Part 3
+
+Scripts: 

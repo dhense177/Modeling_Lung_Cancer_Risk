@@ -75,9 +75,12 @@ There does not seem to be any collinearity between features that we should worry
 
 ### 4. Residuals are Independent and Normally Distributed
 
+![](Visuals/resids_dist.png)
+![](Visuals/probplot.png)
 
+### 5. Variance of residuals is constant (homoscedasticity)
 
-
+![](Visuals/resid_varplot.png)
 
 ## ***Simple Linear Regression***
 

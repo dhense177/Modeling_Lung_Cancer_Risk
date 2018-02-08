@@ -33,11 +33,11 @@ The only county-wide smoking data I could find were age and gender standardized 
 
 ## ***Primary Assumptions Behind Linear Regression***
 
-1. Sample data representative of population
+### 1. Sample data representative of population
 
 Here it would be wise to consider what population makes sense. All U.S. Counties? Probably not. The data in this analysis is limited - we only have cancer data on counties in 7 states. Also, the health and environmental data I gathered tends to be more available in larger counties (>100,000 people). Therefore, it would make more sense to say that the relevant population is large U.S. counties.
 
-2. True relationship between X and Y is linear
+### 2. True relationship between X and Y is linear
 
 ![](Visuals/linear_fit.png)
 
@@ -47,7 +47,7 @@ These individual linear best fit lines look pretty good. Linear modeling should 
 
 Although the least squares lines look like they do a good job of explaining incidence over time in different counties, they are surely overfitting and the predictions generated from such a model would not generalize to other counties/future years.
 
-3. Features are Linearly Independent
+### 3. Features are Linearly Independent
 
 I will discuss my feature selection process in detail in the next section, but here I'd like to look at a heatmap of the features I chose to include in my models:
 

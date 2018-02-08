@@ -31,29 +31,6 @@ A considerable amount of time was spent cleaning and grouping the SEER data so t
 
 The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodology) so that adult smoking percentages can be compared among counties without looking at the role that gender and age play in determining smoking behavior. I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
 
-## ***Primary Assumptions Behind Linear Regression***
-
-### 1. Sample data representative of population
-
-Here it would be wise to consider what population makes sense. All U.S. Counties? Probably not. The data in this analysis is limited - we only have cancer data on counties in 7 states. Also, the health and environmental data I gathered tends to be more available in larger counties (>100,000 people). Therefore, it would make more sense to say that the relevant population is large U.S. counties.
-
-### 2. True relationship between X and Y is linear
-
-![](Visuals/linear_fit.png)
-
-### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2001-2011
-
-These individual linear best fit lines look pretty good. Linear modeling should produce good results.
-
-Although the least squares lines look like they do a good job of explaining incidence over time in different counties, they are surely overfitting and the predictions generated from such a model would not generalize to other counties/future years.
-
-### 3. Features are Linearly Independent
-
-I will discuss my feature selection process in detail in the next section, but here I'd like to look at a heatmap of the features I chose to include in my models:
-
-![](Visuals/heatmap.png)
-
-
 
 ## ***Feature Selection***
 
@@ -70,6 +47,37 @@ The model which minimizes the BIC is comprised of features:
 * Days of Harmful PM 2.5 Levels
 * Air Quality Index Levels
 * Mean Radon Levels
+
+
+## ***Primary Assumptions Behind Linear Regression***
+
+### 1. Sample data representative of population
+
+Here it would be wise to consider what population makes sense. All U.S. Counties? Probably not. The data in this analysis is limited - we only have cancer data on counties in 7 states. Also, the health and environmental data I gathered tends to be more available in larger counties (>100,000 people). Therefore, it would make more sense to say that the relevant population is large U.S. counties.
+
+### 2. True relationship between X and Y is linear
+
+![](Visuals/linear_model.png)
+
+### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2001-2011
+
+These individual linear best fit lines look pretty good. Linear modeling should produce good results.
+
+Although the least squares lines look like they do a good job of explaining incidence over time in different counties, they are surely overfitting and the predictions generated from such a model would not generalize to other counties/future years.
+
+### 3. Features are Linearly Independent
+
+![](Visuals/heatmap.png)
+
+### Figure 4: Heatmap showing correlations among features and target
+
+There does not seem to be any collinearity between features that we should worry about. One interesting finding, though, is that there is a negative correlation between Median Air Quality index values and cancer incidence in these counties. Daily smoking is clearly the strongest predictor of lung cancer while log radon levels and Days of high PM2.5 seem to be adding some information as well.
+
+### 4. Residuals are Independent and Normally Distributed
+
+
+
+
 
 ## ***Simple Linear Regression***
 

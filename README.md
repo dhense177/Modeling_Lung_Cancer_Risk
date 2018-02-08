@@ -45,7 +45,7 @@ The only county-wide smoking data I could find were age and gender standardized 
 
 When deciding which of the features to include in my models, I compared the Bayesian Information Criteria (BIC) scores of various Lasso regressions that I ran, each including a different set of predictors:
 
-![](Visuals/BIC_table4.png)
+![](Visuals/BIC_table5.png)
 
 ### Table 1: Comparing feature sets using BIC scores
 
@@ -95,7 +95,7 @@ Comparing RMSE between the two models:
 
 Overall I obtained the best results by grouping all counties together to form a prior distribution. Lets take a look at Warren County, KY to get a better sense for the difference between these 2 models:
 
-![](Visuals/hier_counties15.png)
+![](Visuals/hier_counties13.png)
 
 Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower incidence ~80-85, the dark green line is shifted upwards towards the group mean. The dark blue line, however, fits the local data very well and is closer to the overall mean for counties in my dataset ~70 per 100,000.
 

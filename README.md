@@ -20,16 +20,6 @@ It is evident that counties differ drastically in their risk for lung cancer - c
 Not only do individual counties differ drastically from each other, but counties in different states also display substantial differences in mean lung cancer incidence.
 
 
-## ***Least Squares Fitting***
-
-![](Visuals/linear_fit.png)
-
-### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2001-2011
-
-These individual linear best fit lines look pretty good. Linear modeling should produce good results.
-
-Although the least squares lines look like they do a good job of explaining incidence over time in different counties, they are surely overfitting and the predictions generated from such a model would not generalize to other counties/future years.
-
 ## ***Data Sources***
 
 I requested research access to the NIH SEER Cancer Data, which comprises both cancer incidence and population data for several U.S. states from 1973-2014. I also found public county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. For this analysis I limited my time horizon to 2001-2011 due to the best data availability during this period. The full list of data sources used can be found in data_dictionary.txt
@@ -39,17 +29,41 @@ I requested research access to the NIH SEER Cancer Data, which comprises both ca
 
 A considerable amount of time was spent cleaning and grouping the SEER data so that it could be joined with the other data sources mentioned above.
 
-The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodogy) so that adult smoking percentages can be compared among counties without looking at the role that gender and age play in determining smoking behavior. I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
+The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodology) so that adult smoking percentages can be compared among counties without looking at the role that gender and age play in determining smoking behavior. I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
+
+## ***Primary Assumptions Behind Linear Regression***
+
+1. Sample data representative of population
+
+Here it would be wise to consider what population makes sense. All U.S. Counties? Probably not. The data in this analysis is limited - we only have cancer data on counties in 7 states. Also, the health and environmental data I gathered tends to be more available in larger counties (>100,000 people). Therefore, it would make more sense to say that the relevant population is large U.S. counties.
+
+2. True relationship between X and Y is linear
+
+![](Visuals/linear_fit.png)
+
+### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2001-2011
+
+These individual linear best fit lines look pretty good. Linear modeling should produce good results.
+
+Although the least squares lines look like they do a good job of explaining incidence over time in different counties, they are surely overfitting and the predictions generated from such a model would not generalize to other counties/future years.
+
+3. Features are Linearly Independent
+
+I will discuss my feature selection process in detail in the next section, but here I'd like to look at a heatmap of the features I chose to include in my models:
+
+![](Visuals/heatmap.png)
+
+
 
 ## ***Feature Selection***
 
-When deciding which of the features to include in my models, I compared the Bayesian Information Criteria (BIC) scores of various Lasso regressions that I ran, each including a different set of predictors:
+When deciding which of the features to include in my models, I compared the Bayesian Information Criteria (BIC) and Akaike Information Criteria (AIC) scores of various Lasso regressions that I ran, each including a different set of predictors:
 
 ![](Visuals/bic_table5.png)
 
 ### Table 1: Comparing feature sets using BIC scores
 
-The BIC score is able to help deal with the overfitting problem mentioned previously. The first component of the BIC, called the likelihood function, is a measure of goodness of fit between a model and the data. The more features you include in your model, the lower your likelihood function will be (the lower the better). The second component of BIC is the regularization parameter. This term penalizes models by the number of features included. So models containing extra features that don't add much information will show higher scores (worse).
+These estimtors are able to help deal with the overfitting problem mentioned previously. The first component of the BIC, called the likelihood function, is a measure of goodness of fit between a model and the data. The more features you include in your model, the lower your likelihood function will be (the lower the better). The second component of BIC is the regularization parameter. This term penalizes models by the number of features included. So models containing extra features that don't add much information will show higher scores (worse).
 
 The model which minimizes the BIC is comprised of features:
 * Adult Daily Smoking % Estimates

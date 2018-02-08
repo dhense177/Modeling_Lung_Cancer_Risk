@@ -75,8 +75,10 @@ There does not seem to be any collinearity between features that we should worry
 
 ### 4. Residuals are Independent and Normally Distributed
 
-![](Visuals/resids_dist.png)
+![](Visuals/resids_dist2.png)
 ![](Visuals/probplot.png)
+
+### Figure 5: Distribution of Residuals with Q-Q Plot
 
 ### 5. Variance of residuals is constant (homoscedasticity)
 

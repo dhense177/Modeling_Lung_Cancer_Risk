@@ -17,7 +17,7 @@ It is evident that counties differ drastically in their risk for lung cancer - c
 
 ### Figure 2: State-wide mean lung cancer incidence per 100,000 people between 2001-2011
 
-Not only do individual counties differ drastically from each other, but states also display substantial differences in mean lung cancer incidence.
+Not only do individual counties differ drastically from each other, but counties in different states also display substantial differences in mean lung cancer incidence.
 
 
 ## ***Least Squares Fitting***
@@ -39,7 +39,7 @@ I requested research access to the NIH SEER Cancer Data, which comprises both ca
 
 A considerable amount of time was spent cleaning and grouping the SEER data so that it could be joined with the other data sources mentioned above.
 
-The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodogy) so that adult smoking percentages can be compared among counties without looking at the role that gender and age play in determining risk for lung cancer. I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
+The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodogy) so that adult smoking percentages can be compared among counties without looking at the role that gender and age play in determining smoking behavior. I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
 
 ## ***Feature Selection***
 
@@ -95,7 +95,7 @@ Comparing RMSE between the two models:
 
 Overall I obtained the best results by grouping all counties together to form a prior distribution. Lets take a look at Warren County, KY to get a better sense for the difference between these 2 models:
 
-![](Visuals/hier_counties13.png)
+![](Visuals/hier_counties15.png)
 
 Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower incidence ~80-85, the dark green line is shifted upwards towards the group mean. The dark blue line, however, fits the local data very well and is closer to the overall mean for counties in my dataset ~70 per 100,000.
 

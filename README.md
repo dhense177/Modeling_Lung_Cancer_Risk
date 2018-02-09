@@ -121,13 +121,17 @@ frequentist methods assume that model coefficients are always fixed, Bayesian me
 I tried 2 multilevel models, differing by the group distributions specified. The first used state-level grouping, so that the prior distribution for each county is made up of all other counties in that state. The second grouped all counties together to create a prior distribution.
 
 
-![](Visuals/regression_table.png)
+![](Visuals/regression_table2.png)
 ### Table 2: Linear Model Comparison
 
 
 Overall I obtained the best results by estimating model coefficients using a group distribution comprising all counties in my dataset.
 
 ## ***Multilevel Modeling - Details***
+
+![](Visuals/mm_traces.png)
+### Figure 7: PyMC3 Traceplot
+
 
 Lets take a look at Warren County, KY to get a better sense for the difference between these 2 models:
 

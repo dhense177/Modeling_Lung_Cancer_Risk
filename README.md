@@ -109,16 +109,14 @@ But I think we can do better.
 
 Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my models, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to focus on multilevel regression which helps control for confounding variables.
 
-## ***Multilevel Regression***
+## ***Multilevel Modeling***
 
 Multilevel, or hierarchical regression techniques are a compromise between the pooled and unpooled methods. This approach assumes that while the coefficients (y-intercept, slope terms) are different for each county, they all come from a common group distribution ("prior").
 
 ![](Visuals/multilevel_formula.png)
 
 This type of parameter estimation is core to Bayesian Statistics. While
-frequentist methods assume that model coefficients are always fixed, Bayesian methods try to estimate the coefficients using sampling techniques such as the Markov Chain Monte Carlo algorithm (which I used).
-
-![](Visuals/bayes_thm2.png)
+frequentist methods assume that model coefficients are always fixed, Bayesian methods try to estimate the coefficients. I will discuss the details of this estimation in the following section.
 
 I tried 2 multilevel models, differing by the group distributions specified. The first used state-level grouping, so that the prior distribution for each county is made up of all other counties in that state. The second grouped all counties together to create a prior distribution.
 
@@ -127,7 +125,11 @@ I tried 2 multilevel models, differing by the group distributions specified. The
 ### Table 2: Linear Model Comparison
 
 
-Overall I obtained the best results by grouping all counties together to form a prior distribution. Lets take a look at Warren County, KY to get a better sense for the difference between these 2 models:
+Overall I obtained the best results by estimating model coefficients using a group distribution comprising all counties in my dataset.
+
+## ***Multilevel Modeling - Details***
+
+Lets take a look at Warren County, KY to get a better sense for the difference between these 2 models:
 
 ![](Visuals/hier_counties13.png)
 

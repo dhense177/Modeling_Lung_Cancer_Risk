@@ -122,7 +122,7 @@ I tried 2 multilevel models, differing by the group distributions specified. The
 
 
 ![](Visuals/regression_table.png)
-### Table 2: Linear Model Comparison 
+### Table 2: Linear Model Comparison
 
 
 Overall I obtained the best results by grouping all counties together to form a prior distribution. Lets take a look at Warren County, KY to get a better sense for the difference between these 2 models:
@@ -133,6 +133,7 @@ Kentucky counties have the highest lung cancer incidence out of all states in my
 
 Looking at plots from a few other counties:
 
+![](Visuals/hier_counties15.png)
 
 It is clear from these plots that the County-Level model produces point estimates and 95% confidence intervals that fit the data much better than the state-grouped approach, evident by the model's significantly lower RMSE.
 

@@ -107,7 +107,7 @@ A lower RMSE value is desired. The fully-pooled model had an RMSE of 17.5, and t
 
 But I think we can do better.
 
-Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my model, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to focus on multilevel regression which helps control for confounding variables.
+Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my models, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to focus on multilevel regression which helps control for confounding variables.
 
 ## ***Multilevel Regression***
 
@@ -117,6 +117,8 @@ Multilevel, or hierarchical regression techniques are a compromise between the p
 
 This type of parameter estimation is core to Bayesian Statistics. While
 frequentist methods assume that model coefficients are always fixed, Bayesian methods try to estimate the coefficients using sampling techniques such as the Markov Chain Monte Carlo algorithm (which I used).
+
+![](Visuals/bayes_thm.png)
 
 I tried 2 multilevel models, differing by the group distributions specified. The first used state-level grouping, so that the prior distribution for each county is made up of all other counties in that state. The second grouped all counties together to create a prior distribution.
 

@@ -61,9 +61,9 @@ Here it would be wise to consider what population makes sense. All U.S. Counties
 
 ### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2001-2011
 
-These individual linear best fit lines look pretty good. Linear modeling should produce good results.
+The predictions in red come from my baseline unpooled regression model (discussed in detail in the next section), and seem to closely resemble the linear best fit line.
 
-Although the least squares lines look like they do a good job of explaining incidence over time in different counties, they are surely overfitting and the predictions generated from such a model would not generalize to other counties/future years.
+It is safe to say that the relationship between our variables and lung cancer incidence appears linear.
 
 ### 3. Features are Linearly Independent
 
@@ -80,13 +80,20 @@ There does not seem to be any collinearity between features that we should worry
 
 ### Figure 5: Distribution of Residuals with Q-Q Plot
 
+The residuals from my baseline unpooled regression model look approximately normal.
+
 ### 5. Variance of residuals is constant (homoscedasticity)
 
 ![](Visuals/resid_varplot.png)
+### Figure 6: Variance of Residuals from Unpooled Model
+
+The variance of the residuals is almost exactly constant, except for prediction values >100, where our data is more sparse.
+
+Now that these assumptions behind linear regression seem to hold up, we can dive into the modeling.
 
 ## ***Simple Linear Regression***
 
-Without introducing a hierarchical struture to the data, we have 3 options:
+Without introducing a hierarchical structure to the data, we have 3 options:
 1. Fully-Pooled: Model 2001-2011 lung cancer incidence through use of a single regression model for all counties
 2. State-Pooled: Model 2001-2011 lung cancer incidence through use of separate regression models for each state
 3. Unpooled: Model 2001-2011 lung cancer incidence by running separate regression models on each individual county
@@ -96,13 +103,11 @@ I tried both fully-pooled and unpooled models, and chose to evaluate model perfo
 
 ![](Visuals/RMSE.png)
 
-A lower RMSE value is desired. The fully-pooled model had an RMSE of 18.6, and the unpooled an RMSE of 10.3. Relative to the mean lung cancer incidence of ~70 for all counties, the unpooled model wasn't bad. But clearly the fully-pooled model is not a good option.
+A lower RMSE value is desired. The fully-pooled model had an RMSE of 17.5, and the unpooled an RMSE of 9.2. Relative to the mean lung cancer incidence of ~70 for all counties, the unpooled model wasn't bad. But clearly the fully-pooled model is not a good option.
 
-![](Visuals/predictions3.png)
+But I think we can do better.
 
-### Figure 4: Unpooled estimates vs. actual mean lung cancer incidence per county
-
-This plot shows that the unpooled model does a very good job of estimating the mean incidence per county. But how good is it at generalizing to future years or to other counties? Probably not great. Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my model, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to focus on multilevel regression which helps control for confounding variables.
+Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my model, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to focus on multilevel regression which helps control for confounding variables.
 
 ## ***Multilevel Regression***
 
@@ -116,9 +121,9 @@ frequentist methods assume that model coefficients are always fixed, Bayesian me
 I tried 2 multilevel models, differing by the group distributions specified. The first used state-level grouping, so that the prior distribution for each county is made up of all other counties in that state. The second grouped all counties together to create a prior distribution.
 
 
-Comparing RMSE between the two models:
-1. State-Level: 13.0
-2. County-Level: 7.7
+![](Visuals/regression_table.png)
+### Table 2: Linear Model Comparison 
+
 
 Overall I obtained the best results by grouping all counties together to form a prior distribution. Lets take a look at Warren County, KY to get a better sense for the difference between these 2 models:
 

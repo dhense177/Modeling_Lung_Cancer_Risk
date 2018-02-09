@@ -51,11 +51,11 @@ The model which minimizes the BIC is comprised of features:
 
 ## ***Primary Assumptions Behind Linear Regression***
 
-### 1. Sample data representative of population
+### 1. Sample Data Representative of Population
 
 Here it would be wise to consider what population makes sense. All U.S. Counties? Probably not. The data in this analysis is limited - we only have cancer data on counties in 7 states. Also, the health and environmental data I gathered tends to be more available in larger counties (>100,000 people). Therefore, it would make more sense to say that the relevant population is large U.S. counties.
 
-### 2. True relationship between X and Y is linear
+### 2. True Relationship Between X and Y is Linear
 
 ![](Visuals/linear_model.png)
 
@@ -82,7 +82,7 @@ There does not seem to be any collinearity between features that we should worry
 
 The residuals from my baseline unpooled regression model look approximately normal.
 
-### 5. Variance of residuals is constant (homoscedasticity)
+### 5. Variance of Residuals is Constant (Homoscedasticity)
 
 ![](Visuals/resid_varplot.png)
 ### Figure 6: Variance of Residuals from Unpooled Model
@@ -118,7 +118,7 @@ Multilevel, or hierarchical regression techniques are a compromise between the p
 This type of parameter estimation is core to Bayesian Statistics. While
 frequentist methods assume that model coefficients are always fixed, Bayesian methods try to estimate the coefficients using sampling techniques such as the Markov Chain Monte Carlo algorithm (which I used).
 
-![](Visuals/bayes_thm.png)
+![](Visuals/bayes_thm2.png)
 
 I tried 2 multilevel models, differing by the group distributions specified. The first used state-level grouping, so that the prior distribution for each county is made up of all other counties in that state. The second grouped all counties together to create a prior distribution.
 

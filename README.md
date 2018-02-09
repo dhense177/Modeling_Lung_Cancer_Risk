@@ -40,7 +40,7 @@ When deciding which of the features to include in my models, I compared the Baye
 
 ### Table 1: Comparing feature sets using BIC scores
 
-These estimtors are able to help deal with the overfitting problem mentioned previously. The first component of the BIC, called the likelihood function, is a measure of goodness of fit between a model and the data. The more features you include in your model, the lower your likelihood function will be (the lower the better). The second component of BIC is the regularization parameter. This term penalizes models by the number of features included. So models containing extra features that don't add much information will show higher scores (worse).
+These estimators are able to help deal with the overfitting problem mentioned previously. The first component of the BIC, called the likelihood function, is a measure of goodness of fit between a model and the data. The more features you include in your model, the higher your likelihood function will be (the higher the better). The second component of BIC is the regularization parameter. This term penalizes models by the number of features included. So models containing extra features that don't add much information will show higher scores (worse).
 
 The model which minimizes the BIC is comprised of features:
 * Adult Daily Smoking % Estimates
@@ -53,11 +53,11 @@ The model which minimizes the BIC is comprised of features:
 
 ### 1. Sample Data Representative of Population
 
-Here it would be wise to consider what population makes sense. All U.S. Counties? Probably not. The data in this analysis is limited - we only have cancer data on counties in 7 states. Also, the health and environmental data I gathered tends to be more available in larger counties (>100,000 people). Therefore, it would make more sense to say that the relevant population is large U.S. counties.
+Here it would be wise to consider what population comprises our sample counties. All U.S. Counties? Probably not. The data in this analysis is limited - we only have cancer data on counties in 7 states. Also, the health and environmental data I gathered tends to be more available in larger counties (>100,000 people). Therefore, it would make more sense to say that the relevant population is large U.S. counties or only large counties in the 7 states in the data (and similar states).
 
 ### 2. True Relationship Between X and Y is Linear
 
-![](Visuals/linear_model.png)
+![](Visuals/unpooled_bestfit2.png)
 
 ### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2001-2011
 
@@ -129,15 +129,31 @@ Overall I obtained the best results by estimating model coefficients using a gro
 
 ## ***Multilevel Modeling - Details***
 
+Since our results show a significant improvement over non-hierarchical methods, let's take a deeper look into the multilevel modeling approach.
+
+We are fitting separate regressions for each county and trying to estimate model parameters so as to avoid overfitting produced by our unpooled model. Our multilevel estimates of county lung cancer incidence incorporate similarities between all U.S. counties in the data, and should generalize much better to other similar counties.
+
+The estimation process is accomplished using the Markov Chain Monte Carlo (MCMC) algorithm. MCMC is gaining popularity in epidemiology where complex modeling is common, and can be a drastic improvement over traditional maximum likelihood estimation techniques.
+
+MCMC is a stochastic procedure which repeatedly draws random samples from the dataset which characterize the distribution of parameters of interest.
+* Markov Chain: Generates random samples from dataset. Directed random walk (sampling of parameter values proportional to their probabilities) through parameter space which describes all possible values for parameters of interest
+* Monte Carlo: Generates summary statistics from random samples
+
 ![](Visuals/mm_traces.png)
 ### Figure 7: PyMC3 Traceplot
 
+PyMC3 is a Probabilistic Programming library in python which I used for this analysis. The left column of the traceplot above shows the distributions for population mean model parameters (blue) and the distributions of individual model parameters (multi-colored) for each county. The right column shows the random walk taken through the parameter space for each of these distributions.
 
-Lets take a look at Warren County, KY to get a better sense for the difference between these 2 models:
+An interesting finding here is that both beta3 and beta4 (coefficients for variables Median AQI and log radon) are negative. This is certainly worth taking a deeper look into.
+
+
+## ***Multilevel Modeling - Difference Between Models***
+
+Lets take a look at Warren County, KY to get a better sense for the difference between the 2 multilevel models I tried:
 
 ![](Visuals/warren3.png)
 
-Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower incidence ~80-85, the dark green line is shifted upwards towards the group mean. The dark blue line, however, fits the local data very well and is closer to the overall mean for counties in my dataset ~70 per 100,000.
+Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower incidence ~80-85, the dark green line is shifted upwards towards the Kentucky group mean. The dark blue line, however, fits the local data very well and is closer to the overall mean for counties in my dataset ~70 per 100,000.
 
 Looking at plots from a few other counties:
 

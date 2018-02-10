@@ -1,7 +1,7 @@
 # Modeling Lung Cancer Incidence in Select U.S. Counties
 My Galvanize Capstone Project
 
-## Index
+## ***Index***
 
 * [Motivation](#motivation)
 * [Data Sources](#data-sources)

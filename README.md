@@ -193,3 +193,30 @@ I would also like to try analyzing other data that is related to lung cancer inc
 In addition to standardizing the data by age and gender, it would be helpful to standardize by race/ethnicity as well, since this is another confounding variable that explains differences in incidence.
 
 Lastly, in order to build a strong predictive model that could generalize well to other counties/years, it would be necessary to obtain unaggregated healthcare data with many more data points per county.
+
+## ***Sources***
+
+A full list of data sources can be found in data_dictionary.txt. The below sources helped tremendously with my analysis.
+
+
+* [The Best Of Both Worlds: Hierarchical Linear Regression in PyMC3 (Danne Elbers, Thomas Wiecki)](http://twiecki.github.io/blog/2014/03/17/bayesian-glms-3/)
+
+* [Multilevel (Hierarchical) Modeling:What It Can and Cannot Do (Andrew Gelman)](http://www.stat.columbia.edu/~gelman/research/published/multi2.pdf)
+
+* [A Primer on Bayesian Methods for Multilevel Modeling](http://docs.pymc.io/notebooks/multilevel_modeling.html)
+
+* [GLM: Model Selection](http://docs.pymc.io/notebooks/GLM-model-selection.html)
+
+* [Bayesian inference in ecology](http://onlinelibrary.wiley.com/doi/10.1111/j.1461-0248.2004.00603.x/full)
+
+* [Markov Chain Monte Carlo: and introduction for epidemiologists](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3619958/)
+
+* [Cigarette smoking prevalence in US counties: 1996-2012](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3987818/)
+
+* [Forecasting Medicare Spending at the County Level](https://github.com/brendan-drew/County-Medicare-Spending)
+
+* [Data Sources for an Environmental Quality Index: Avaliability, Quality and Utility](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3222503/)
+
+* [Comprehensive data exploration with Python](https://www.kaggle.com/pmarcelino/comprehensive-data-exploration-with-python)
+
+* [Applications of Machine Learning in Cancer Prediction and Prognosis](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2675494/)

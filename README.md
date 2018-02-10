@@ -3,16 +3,16 @@ My Galvanize Capstone Project
 
 ## Index
 
-* [Motivation]
-* [Data Sources]
-* [Cleaning & Standardization]
-* [Feature Selection]
-* [Primary Assumptions Behind Linear Regression]
-* [Simple Linear Regression]
-* [Multilevel Modeling]
-* [Multilevel Modeling - Details]
-* [Multilevel Modeling - Difference Between Models]
-* [Future Direction]
+* [Motivation](#motivation)
+* [Data Sources](#data-sources)
+* [Cleaning & Standardization](#cleaning_&_standardization)
+* [Feature Selection](#feature_selection)
+* [Primary Assumptions Behind Linear Regression](#primary_assumptions_behind_linear_regression)
+* [Simple Linear Regression](#simple_linear_regression)
+* [Multilevel Modeling](#multilevel_modeling)
+* [Multilevel Modeling - Details](#multilevel_modeling_-_details)
+* [Multilevel Modeling - Difference Between Models](#multilevel_modeling_-_difference_between_models)
+* [Future Direction](#future_direction)
 
 ## ***Motivation***
 Cancer is one of the leading causes of death both in the U.S. and worldwide, and lung cancer is one of the most widespread and deadly varieties. Much research has been done on the link between smoking tobacco and lung cancer risk; it is estimated that ~85% of lung cancer cases are attributed to smoking tobacco. The remaining 10-15% is not as well understood (but a very significant portion given how prevalent lung cancer is). Air pollution, as well as exposure to various chemicals (radon, asbestos, arsenic, cadmium, etc.) explain many of the remaining lung cancer cases.

@@ -103,11 +103,11 @@ I tried both fully-pooled and unpooled models, and chose to evaluate model perfo
 
 ![](Visuals/RMSE.png)
 
-A lower RMSE value is desired. The fully-pooled model had an RMSE of 17.5, and the unpooled an RMSE of 9.2. Relative to the mean lung cancer incidence of ~70 for all counties, the unpooled model wasn't bad. But clearly the fully-pooled model is not a good option.
+A lower RMSE value is desired. The fully-pooled model had an RMSE of 17.5, and the unpooled an RMSE of 9.2. Relative to the mean lung cancer incidence of ~70 for all counties, the unpooled model wasn't bad. Clearly the fully-pooled model is not a good option.
 
 But I think we can do better.
 
-Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my models, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to focus on multilevel regression which helps control for confounding variables.
+Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my models, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to focus on multilevel regression which helps incorporate this useful information by assuming underlying similarities between counties.
 
 ## ***Multilevel Modeling***
 
@@ -118,7 +118,7 @@ Multilevel, or hierarchical regression techniques are a compromise between the p
 This type of parameter estimation is core to Bayesian Statistics. While
 frequentist methods assume that model coefficients are always fixed, Bayesian methods try to estimate the coefficients. I will discuss the details of this estimation in the following section.
 
-I tried 2 multilevel models, differing by the group distributions specified. The first used state-level grouping, so that the prior distribution for each county is made up of all other counties in that state. The second grouped all counties together to create a prior distribution.
+I tried 2 multilevel models, differing by the group distributions specified. The first used state-level grouping, so that the prior distribution for each county is made up of all other counties in that state. The second grouped all counties together.
 
 
 ![](Visuals/regression_table2.png)
@@ -163,7 +163,7 @@ It is clear from these plots that the County-Level model produces point estimate
 
 Looking at these point estimates and 95% confidence intervals across all counties:
 
-![](Visuals/multilevel_comparison.png)
+![](Visuals/hier_point_estimates.png)
 
 ### Figure 5: Point estimates and 95% Confidence Intervals for Multilevel Models
 

@@ -38,7 +38,7 @@ Not only do individual counties differ drastically from each other, but counties
 I requested research access to the NIH SEER Cancer Data, which comprises both cancer incidence and population data for several U.S. states from 1973-2014. I also found public county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. For this analysis I limited my time horizon to 2001-2011 due to the best data availability during this period. The full list of data sources used can be found in data_dictionary.txt
 
 
-### ***Cleaning & Standardization***
+## ***Cleaning & Standardization***
 
 A considerable amount of time was spent cleaning and grouping the SEER data so that it could be joined with the other data sources mentioned above.
 

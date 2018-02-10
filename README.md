@@ -35,14 +35,14 @@ Not only do individual counties differ drastically from each other, but counties
 
 ## ***Data Sources***
 
-I requested research access to the NIH SEER Cancer Data, which comprises both cancer incidence and population data for several U.S. states from 1973-2014. I also found public county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. For this analysis I limited my time horizon to 2001-2011 due to the best data availability during this period. The full list of data sources used can be found in data_dictionary.txt
+I requested research access to the NIH SEER Cancer Data, which comprises both cancer incidence and population data for several U.S. states from 1973-2014. I also found public county-wide data on adult smoking levels, radon levels, PM 2.5 levels, ozone levels, toxic releases and air quality index values. For this analysis I limited my time horizon to 2001-2011 due to the best data availability during this period. The full list of data sources used can be found in [data_dictionary.txt](https://github.com/dhense177/Modeling_Lung_Cancer_Risk/blob/master/data_dictionary.txt)
 
 
 ## ***Cleaning and Standardization***
 
 A considerable amount of time was spent cleaning and grouping the SEER data so that it could be joined with the other data sources mentioned above.
 
-The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodology) so that adult smoking percentages can be compared among counties without looking at the role that gender and age play in determining smoking behavior. I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in methods.txt
+The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodology) so that adult smoking percentages can be compared among counties without looking at the role that gender and age play in determining smoking behavior. I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in [methods.txt](https://github.com/dhense177/Modeling_Lung_Cancer_Risk/blob/master/methods.txt)
 
 
 ## ***Feature Selection***
@@ -74,7 +74,7 @@ Here it would be wise to consider what population comprises our sample counties.
 
 ### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2001-2011
 
-The predictions in red come from my baseline unpooled regression model (discussed in detail in the next section), and seem to closely resemble the linear best fit line.
+The predictions in red come from my baseline unpooled regression model (discussed in detail in the [next section](#simple-linear-regression)), and seem to closely resemble the linear best fit line.
 
 It is safe to say that the relationship between our variables and lung cancer incidence appears linear.
 
@@ -120,7 +120,7 @@ A lower RMSE value is desired. The fully-pooled model had an RMSE of 17.5, and t
 
 But I think we can do better.
 
-Both counties and states share many similarites that would explain lung cancer incidence that I have not included in my models, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to focus on multilevel regression which helps incorporate this useful information by assuming underlying similarities between counties.
+Both counties and states share many similarities that would explain lung cancer incidence that I have not included in my models, such as smoking prevention initiatives and air quality standards. These confounding variables could be very useful when forecasting county-wide incidence, but the unpooled model does not take them into account. Therefore, in order to improve upon these baseline models, I chose to focus on multilevel regression which helps incorporate this useful information by assuming underlying similarities between counties.
 
 ## ***Multilevel Modeling***
 
@@ -196,7 +196,7 @@ Lastly, in order to build a strong predictive model that could generalize well t
 
 ## ***Sources***
 
-A full list of data sources can be found in data_dictionary.txt. The below sources helped tremendously with my analysis.
+A full list of data sources can be found in [data_dictionary.txt](https://github.com/dhense177/Modeling_Lung_Cancer_Risk/blob/master/data_dictionary.txt). The below sources helped tremendously with my analysis.
 
 
 * [The Best Of Both Worlds: Hierarchical Linear Regression in PyMC3 (Danne Elbers, Thomas Wiecki)](http://twiecki.github.io/blog/2014/03/17/bayesian-glms-3/)

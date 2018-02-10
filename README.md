@@ -5,7 +5,7 @@ My Galvanize Capstone Project
 
 * [Motivation](#motivation)
 * [Data Sources](#data-sources)
-* [Cleaning & Standardization](#cleaning-&-standardization)
+* [Cleaning and Standardization](#cleaning-and-standardization)
 * [Feature Selection](#feature-selection)
 * [Primary Assumptions Behind Linear Regression](#primary-assumptions-behind-linear-regression)
 * [Simple Linear Regression](#simple-linear-regression)

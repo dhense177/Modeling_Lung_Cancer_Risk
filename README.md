@@ -24,7 +24,7 @@ Recently there has been increased focus on considering the interplay between man
 
 ### Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,000 people between 2001-2011
 
-It is evident that counties differ drastically in their risk for lung cancer - counties in Kentucky show incidence of 150 per 100,00, while counties in California hover around 30 per 100,000, a 5-fold difference.
+It is evident that counties differ drastically in their risk for lung cancer - counties in Kentucky show incidence of 150 per 100,00, while counties in California hover around 30 per 100,000, a **5-fold difference.**
 
 ![](Visuals/state_rates2.png)
 
@@ -164,7 +164,7 @@ An interesting finding here is that both beta3 and beta4 (coefficients for varia
 
 Lets take a look at Warren County, KY to get a better sense for the difference between the 2 multilevel models I tried:
 
-![](Visuals/warren3.png)
+![](Visuals/warren_county.png)
 
 Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower incidence ~80-85, the dark green line is shifted upwards towards the Kentucky group mean. The dark blue line, however, fits the local data very well and is closer to the overall mean for counties in my dataset ~70 per 100,000.
 

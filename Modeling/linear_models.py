@@ -169,51 +169,51 @@ if __name__=='__main__':
     plt.savefig('../probplot2.png')
 
     ##UNPOOLED LINEAR PLOT
-    # four_counties = ['Yolo County, CA','Warren County, KY', 'Wayne County, MI', 'Grant County, NM']
-    #
-    # fig, ax = plt.subplots(2,2,figsize=(35,20))
-    # counter = 1
-    # for c in four_counties:
-    #
-    #     plt.subplot(2,2,counter)
-    #     plt.grid(False)
-    #     plt.scatter([str(i) for i in range(2001,2012)],df_lung.loc[c].cancer_incidence_x.values, color='black', s=500)
-    #
-    #     X = np.array([int(i) for i in range(2001,2012)])
-    #     Y = np.array(df_lung.loc[c].cancer_incidence_x.values)
-    #     fit = np.polyfit(X, Y, deg=1)
-    #     plt.plot(X, fit[0] * X + fit[1], color='black', lw=10)
-    #
-    #     plt.scatter([str(i) for i in range(2001,2012)],unpooled_estimates.loc[c].values, color='red', s=500)
-    #
-    #     plt.xlabel('Years', fontsize=35)
-    #     plt.ylabel('Mean Lung Cancer Incidence per 100,000', fontsize=32)
-    #     plt.title(c, fontsize=40)
-    #     plt.tick_params(labelsize=35)
-    #     plt.ylim([20,120])
-    #     counter += 1
-    #     plt.tight_layout()
-    #     plt.savefig('../linear_model.png')
+    four_counties = ['Yolo County, CA','Warren County, KY', 'Wayne County, MI', 'Grant County, NM']
+
+    fig, ax = plt.subplots(2,2,figsize=(35,20))
+    counter = 1
+    for c in four_counties:
+
+        plt.subplot(2,2,counter)
+        plt.grid(False)
+        plt.scatter([str(i) for i in range(2001,2012)],df_lung.loc[c].cancer_incidence_x.values, color='black', s=500)
+
+        X = np.array([int(i) for i in range(2001,2012)])
+        Y = np.array(df_lung.loc[c].cancer_incidence_x.values)
+        fit = np.polyfit(X, Y, deg=1)
+        plt.plot(X, fit[0] * X + fit[1], color='black', lw=10)
+
+        plt.scatter([str(i) for i in range(2001,2012)],unpooled_estimates.loc[c].values, color='red', s=500)
+
+        plt.xlabel('Years', fontsize=35)
+        plt.ylabel('Mean Lung Cancer Incidence per 100,000', fontsize=32)
+        plt.title(c, fontsize=40)
+        plt.tick_params(labelsize=35)
+        plt.ylim([20,120])
+        counter += 1
+        plt.tight_layout()
+        plt.savefig('../linear_model.png')
 
 
     ## PLOT FORESTPLOT OF BETA0's
 
-    # plt.figure(figsize=(6,14))
-    # forestplot(unpooled_trace, varnames=['beta1'], ylabels=counties)
-    # plt.savefig('../unpooled_model11.png')
+    plt.figure(figsize=(6,14))
+    forestplot(unpooled_trace, varnames=['beta1'], ylabels=counties)
+    plt.savefig('../unpooled_model11.png')
 
     ## PLOT ORDERED FORESTPLOT OF UNPOOLED ESTIMATES
 
-    # plt.figure(figsize=(6,14))
-    # order = unpooled_estimates.sort_values().index
-    #
-    # plt.scatter(range(len(unpooled_estimates)), unpooled_estimates[order])
-    # for i, m, se in zip(range(len(unpooled_estimates)), unpooled_estimates[order], unpooled_se[order]):
-    #     plt.plot([i,i], [m-se, m+se], 'b-')
-    #
-    # plt.ylabel('Cancer Incidence 95% Confidence Interval')
-    # plt.xlabel('Ordered Counties')
-    # plt.savefig('../unpooled_ordered10.png')
+    plt.figure(figsize=(6,14))
+    order = unpooled_estimates.sort_values().index
+
+    plt.scatter(range(len(unpooled_estimates)), unpooled_estimates[order])
+    for i, m, se in zip(range(len(unpooled_estimates)), unpooled_estimates[order], unpooled_se[order]):
+        plt.plot([i,i], [m-se, m+se], 'b-')
+
+    plt.ylabel('Cancer Incidence 95% Confidence Interval')
+    plt.xlabel('Ordered Counties')
+    plt.savefig('../unpooled_ordered10.png')
 #######################################################
 #Hierarchical states
 
@@ -275,6 +275,8 @@ if __name__=='__main__':
 
         hiers_se = pd.Series(hierarchical_trace['beta0'].std(axis=0)+hierarchical_trace['beta1'].std(axis=0)[state]*X[:,0]+hierarchical_trace['beta2'].std(axis=0)[state]*X[:,1]+hierarchical_trace['beta3'].std(axis=0)[state]*X[:,2]+hierarchical_trace['beta4'].std(axis=0)[state]*X[:,3])
 
+
+        #MORE PLOTS
 
         # indv_a = np.array([hierarchical_trace['beta0'][s].mean() for s in state])
         # indv_b = np.array([hierarchical_trace['beta1'][s].mean() for s in state])
@@ -406,6 +408,9 @@ if __name__=='__main__':
 
         hierarchical_se = pd.Series(hierarchical_trace['alpha'].std(axis=0)+hierarchical_trace['beta'].std(axis=0)[county]*X[:,0]+hierarchical_trace['beta2'].std(axis=0)[county]*X[:,1]+hierarchical_trace['beta3'].std(axis=0)[county]*X[:,2]+hierarchical_trace['beta4'].std(axis=0)[county]*X[:,3])
 
+        ####################################################
+        ##PLOTS BELOW
+
         #FOUR COUNTIES PLOT
         four_counties = ['Yolo County, CA','Warren County, KY', 'Wayne County, MI', 'Grant County, NM']
 
@@ -517,14 +522,14 @@ if __name__=='__main__':
         forestplot(hierarchical_trace, varnames=['beta2'], ylabels='  '+states)
         plt.savefig('../hierarchical_forestplot4.png')
 
-        # PLOT ordered forestplot of hierarchical estimates
+        # PLOT ORDERED FORESTPLOT OF HIERARCHICAL ESTIMATES
         fig, ax = plt.subplots(figsize=(25,10))
 
         y_new = df_lung['cancer_incidence_x'].reset_index()
         y_new['Number'] = y_new.index
 
 
-        #Unpooled predictions
+        #UNPOOLED PREDICTIONS
         predictions = pd.DataFrame(unpooled_estimates).reset_index()
         predictions_se = pd.DataFrame(unpooled_se).reset_index()
         predictions['Number'] = predictions.index

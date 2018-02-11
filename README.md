@@ -160,11 +160,15 @@ Lets take a look at Warren County, KY to get a better sense for the difference b
 
 ![](Visuals/warren_county.png)
 
+### Figure 7: Yearly Point Estimates and 95% Confidence Intervals from Multilevel Models in Warren County Kentucky
+
 Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower mean incidence ~80-85, the dark green line is shifted upwards towards the Kentucky group mean. The dark blue line, however, fits the local data very well and seems less influenced by the overall mean for all counties (~70 per 100,000).
 
 Looking at plots of a few other counties:
 
 ![](Visuals/hier_counties15.png)
+
+### Figure 8: Yearly Point Estimates and 95% Confidence Intervals from Multilevel Models in Four Counties
 
 It is easy to see that the county-level model produces point estimates and 95% confidence intervals that fit the data much better than the state-grouped model.
 
@@ -172,7 +176,7 @@ Looking at the point estimates and 95% confidence intervals for mean incidence r
 
 ![](Visuals/hier_point_estimates.png)
 
-### Figure 5: Point estimates and 95% Confidence Intervals for Multilevel Models
+### Figure 5: Point Estimates and 95% Confidence Intervals of Mean Incidence from Multilevel Models in All Counties
 
 ### ***Caveat***
 
@@ -195,7 +199,7 @@ MCMC is a stochastic procedure which repeatedly draws random samples from the da
 
 PyMC3 is a Probabilistic Programming library in python which I used for this analysis. The left column of the traceplot above shows the distributions for population mean model parameters (blue) and the distributions of individual model parameters (multi-colored) for each county. The right column shows the random walk taken through the parameter space for each of these distributions.
 
-An interesting finding here is that distributions for both beta3 and beta4 (coefficients for variables Median AQI and log radon) are centered around a negative mean. Thinking back to the [figure 4 heatmap](###figure-4:-heatmap-showing-correlations-among-features-and-target) - Median AQI did have a negative correlation with lung cancer, but log radon showed a slightly positive correlation (~5%) with lung cancer. This may be due to the relatively high collinearity between log radon and daily smoking (27%). It would certainly be worth taking a deeper look into.
+An interesting finding here is that distributions for both beta3 and beta4 (coefficients for variables Median AQI and log radon) are centered around a negative mean. Thinking back to the [figure 4 heatmap](#figure-4:-heatmap-showing-correlations-among-features-and-target) - Median AQI did have a negative correlation with lung cancer, but log radon showed a slightly positive correlation (~5%) with lung cancer. This may be due to the relatively high collinearity between log radon and daily smoking (27%). It would certainly be worth taking a deeper look into.
 
 ## ***Future Direction***
 

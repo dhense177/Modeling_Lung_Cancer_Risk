@@ -64,7 +64,7 @@ When deciding which features to include in my models, I compared the Bayesian In
 
 The first component of the BIC, called the likelihood function, is a measure of goodness of fit between a model and the data. The more features you include in your model, the higher your likelihood function will be (the higher the better). The second component of BIC is the regularization parameter. This term penalizes models by the number of features included. So models containing extra features that don't add much information will show higher scores (worse).
 
-The model which minimizes the BIC is comprised of features:
+The model which minimizes the BIC and AIC is comprised of features:
 * Adult Daily Smoking % Estimates
 * Days of Harmful PM 2.5 Levels
 * Air Quality Index Levels
@@ -93,7 +93,7 @@ It is safe to say that the relationship between our variables and lung cancer in
 
 ### Figure 4: Heatmap showing correlations among features and target
 
-There does not seem to be any serious collinearity between features that we should worry about. The correlations between smoking and radon (0.27) and Median AQI and smoking (-0.23) are the largest in absolute terms among the set of variables.
+There does not seem to be any serious collinearity between features that we should worry about. The correlations between radon and smoking (0.27) and Median AQI and smoking (-0.23) are the largest in absolute terms among the set of variables.
 
 One interesting finding is that there appears to be a negative correlation between Median Air Quality Index values and lung cancer incidence in these counties. This certainly warrants further investigation.
 
@@ -129,7 +129,7 @@ I tried both fully-pooled and unpooled models, and chose to evaluate model perfo
 
 ![](Visuals/RMSE.png)
 
-A lower RMSE value is desired. The fully-pooled model had an RMSE of 17.5, and the unpooled an RMSE of 9.2. Relative to the mean lung cancer incidence of ~70 for all counties, the unpooled model wasn't bad. Clearly the fully-pooled model is not a good option.
+A lower RMSE value is desired. The fully-pooled model had an RMSE of **17.5**, and the unpooled an RMSE of **9.2**. Relative to the mean lung cancer incidence of ~70 for all counties, the unpooled model wasn't bad. Clearly the fully-pooled model is not a good option.
 
 But I think we can do better.
 
@@ -142,7 +142,7 @@ Multilevel, or hierarchical regression techniques are a compromise between the p
 ![](Visuals/multilevel_formula.png)
 
 This type of parameter estimation is core to Bayesian Statistics. While
-frequentist methods assume that model coefficients are always fixed, Bayesian methods try to estimate the coefficients. I will discuss the details of this estimation in the [following section](#multilevel-modeling---details).
+frequentist methods assume that model coefficients are always fixed, Bayesian methods try to estimate the coefficients. I will discuss the details of this estimation in a [following section](#multilevel-modeling---details).
 
 I tried 2 multilevel models, differing by the group distributions specified. The first uses state-level grouping, so that the population distribution for each county comprises all counties in the same state. The second model uses a population distribution comprising all 105 counties in the data.
 
@@ -160,13 +160,13 @@ Lets take a look at Warren County, KY to get a better sense for the difference b
 
 ![](Visuals/warren_county.png)
 
-Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower incidence ~80-85, the dark green line is shifted upwards towards the Kentucky group mean. The dark blue line, however, fits the local data very well and seems less influenced by the overall mean for all counties in my data (~70 per 100,000).
+Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower mean incidence ~80-85, the dark green line is shifted upwards towards the Kentucky group mean. The dark blue line, however, fits the local data very well and seems less influenced by the overall mean for all counties (~70 per 100,000).
 
-Looking at plots from a few other counties:
+Looking at plots of a few other counties:
 
 ![](Visuals/hier_counties15.png)
 
-It is clear that the county-level model produces point estimates and 95% confidence intervals that fit the data much better than the state-grouped approach, also evident by the model's significantly lower RMSE.
+It is easy to see that the county-level model produces point estimates and 95% confidence intervals that fit the data much better than the state-grouped model.
 
 Looking at the point estimates and 95% confidence intervals for mean incidence rates across all counties:
 
@@ -195,7 +195,7 @@ MCMC is a stochastic procedure which repeatedly draws random samples from the da
 
 PyMC3 is a Probabilistic Programming library in python which I used for this analysis. The left column of the traceplot above shows the distributions for population mean model parameters (blue) and the distributions of individual model parameters (multi-colored) for each county. The right column shows the random walk taken through the parameter space for each of these distributions.
 
-An interesting finding here is that both beta3 and beta4 (coefficients for variables Median AQI and log radon) are negative. Thinking back to the [figure 4 heatmap](#-figure-4:-heatmap-showing-correlations-among-features-and-target) - Median AQI did have a negative correlation with lung cancer, but log radon showed a slightly positive correlation (~5%) with lung cancer. This may be due to the relatively high collinearity between log radon and daily smoking (27%). It would certainly be worth taking a deeper look into.
+An interesting finding here is that both beta3 and beta4 (coefficients for variables Median AQI and log radon) are negative. Thinking back to the [figure 4 heatmap](#figure-4:-heatmap-showing-correlations-among-features-and-target) - Median AQI did have a negative correlation with lung cancer, but log radon showed a slightly positive correlation (~5%) with lung cancer. This may be due to the relatively high collinearity between log radon and daily smoking (27%). It would certainly be worth taking a deeper look into.
 
 ## ***Future Direction***
 

@@ -176,7 +176,7 @@ Looking at the point estimates and 95% confidence intervals for mean incidence r
 
 ![](Visuals/hier_point_estimates.png)
 
-### Figure 5: Point Estimates and 95% Confidence Intervals of Mean Incidence from Multilevel Models in All Counties
+### Figure 9: Point Estimates and 95% Confidence Intervals of Mean Incidence from Multilevel Models in All Counties
 
 ### ***Caveat***
 
@@ -195,7 +195,7 @@ MCMC is a stochastic procedure which repeatedly draws random samples from the da
 * Monte Carlo: Generates summary statistics from random samples
 
 ![](Visuals/mm_traces.png)
-### Figure 7: PyMC3 Traceplot
+### Figure 10: PyMC3 Traceplot
 
 PyMC3 is a Probabilistic Programming library in python which I used for this analysis. The left column of the traceplot above shows the distributions for population mean model parameters (blue) and the distributions of individual model parameters (multi-colored) for each county. The right column shows the random walk taken through the parameter space for each of these distributions.
 

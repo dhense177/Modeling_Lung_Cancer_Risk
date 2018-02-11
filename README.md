@@ -173,6 +173,8 @@ Looking at plots of a few other counties:
 
 It is easy to see that the county-level model produces point estimates and 95% confidence intervals that fit the data much better than the state-grouped model.
 
+Both models exhibit "shrinkage" towards the relevant group mean, making the predictions more generalizable.
+
 Looking at the point estimates and 95% confidence intervals for mean incidence rates across all counties:
 
 ![](Visuals/hier_point_estimates.png)

@@ -24,13 +24,13 @@ Recently there has been increased focus on considering the interplay between man
 
 ![](Visuals/county_boxplot3.png)
 
-### Figure 1: Distribution of countywide age and gender standardized lung cancer incidence per 100,000 people between 2001-2011
+### Figure 1: Distribution of County-wide Age and Gender Standardized Lung Cancer Incidence per 100,000 People Between 2001-2011
 
 It is evident that counties differ drastically in their risk for lung cancer - counties in Kentucky show incidence of 150 per 100,00, while counties in California hover around 30 per 100,000, a **5-fold difference.**
 
 ![](Visuals/state_rates2.png)
 
-### Figure 2: State-wide mean lung cancer incidence per 100,000 people between 2001-2011
+### Figure 2: State-wide Mean Lung Cancer Incidence per 100,000 People Between 2001-2011
 
 Not only do individual counties differ drastically from each other, but counties in different states also display substantial differences in mean lung cancer incidence.
 
@@ -59,7 +59,7 @@ When deciding which features to include in my models, I compared the Bayesian In
 
 ![](Visuals/bic_table5.png)
 
-### Table 1: Comparing feature sets using BIC scores
+### Table 1: Comparing Feature Sets Using BIC Scores
 
 
 The first component of the BIC, called the likelihood function, is a measure of goodness of fit between a model and the data. The more features you include in your model, the higher your likelihood function will be (the higher the better). The second component of BIC is the regularization parameter. This term penalizes models by the number of features included. So models containing extra features that don't add much information will show higher scores (worse).
@@ -73,25 +73,25 @@ The model which minimizes the BIC and AIC is comprised of features:
 
 ## ***Primary Assumptions Behind Linear Regression***
 
-### 1. Sample Data Representative of Population
+* Sample Data Representative of Population
 
 Here it would be wise to consider what population we can infer from our sample counties. All U.S. Counties? Probably not. The data in this analysis is limited - we only have cancer data on counties in 7 states. Also, the health and environmental data I gathered tends to be more available in larger counties (>100,000 people). Therefore, it would make more sense to say that the relevant population is large U.S. counties or only large counties in the 7 states in the data (and maybe similar states).
 
-### 2. True Relationship Between X and Y is Linear
+* True Relationship Between X and Y is Linear
 
 ![](Visuals/unpooled_bestfit2.png)
 
-### Figure 3: Mean lung cancer incidence per 100,000 for select counties between 2001-2011
+### Figure 3: Mean Lung Cancer Incidence per 100,000 for Select Counties Between 2001-2011
 
 The predictions in red come from my baseline unpooled regression model (discussed in detail in the [next section](#simple-linear-regression)), and seem to closely resemble the linear best fit line.
 
 It is safe to say that the relationship between our variables and lung cancer incidence appears linear.
 
-### 3. Features are Linearly Independent
+* Features are Linearly Independent
 
 ![](Visuals/heatmap.png)
 
-### Figure 4: Heatmap showing correlations among features and target
+### Figure 4: Heatmap Showing Correlations Among Features and Target
 
 There does not seem to be any serious collinearity between features that we should worry about. The correlations between radon and smoking (0.27) and Median AQI and smoking (-0.23) are the largest in absolute terms among the set of variables.
 
@@ -99,7 +99,7 @@ One interesting finding is that there appears to be a negative correlation betwe
 
 Daily smoking is the most correlated feature with lung cancer incidence while log mean radon levels and days of high PM2.5 seem to be adding some information as well.
 
-### 4. Residuals are Independent and Normally Distributed
+* Residuals are Independent and Normally Distributed
 
 ![](Visuals/resids_dist2.png)
 ![](Visuals/probplot.png)
@@ -108,7 +108,7 @@ Daily smoking is the most correlated feature with lung cancer incidence while lo
 
 The residuals from my baseline unpooled regression model look approximately normal.
 
-### 5. Variance of Residuals is Constant (Homoscedasticity)
+* Variance of Residuals is Constant (Homoscedasticity)
 
 ![](Visuals/resid_varplot.png)
 ### Figure 6: Variance of Residuals from Unpooled Model

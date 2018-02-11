@@ -1,6 +1,8 @@
 # Modeling Lung Cancer Incidence in Select U.S. Counties
 My Galvanize Capstone Project
 
+A special thanks to ZNA Health for helping me formulate my ideas for this project and guiding me towards important data sources and research.
+
 ## ***Index***
 
 * [Motivation](#motivation)
@@ -186,13 +188,17 @@ Since I was limited by data availability for many of the variables I used, there
 
 ## ***Future Direction***
 
-To address the issue above, my next step would be to combine the strengths of both the state-level and county-level hierarchical models. I could try only using the state-level models on counties where there is sufficient data on other counties in the same state.
+* To address the issue above, my next step would be to combine the strengths of both the state-level and county-level hierarchical models. I could try only using the state-level models on counties where there is sufficient data on other counties in the same state.
 
-I would also like to try analyzing other data that is related to lung cancer incidence (socioeconomic, other health factors).
+* I would also like to try analyzing other data that is related to lung cancer incidence (socioeconomic, other health factors).
 
-In addition to standardizing the data by age and gender, it would be helpful to standardize by race/ethnicity as well, since this is another confounding variable that explains differences in incidence.
+* In addition to standardizing the data by age and gender, it would be helpful to standardize by race/ethnicity as well, since this is another confounding variable that explains differences in incidence.
 
-Lastly, in order to build a strong predictive model that could generalize well to other counties/years, it would be necessary to obtain unaggregated healthcare data with many more data points per county.
+* Lastly, in order to build a strong predictive model that could generalize well to other counties/years, it would be necessary to obtain unaggregated healthcare data with many more data points per county.
+
+
+If you have any questions about my project please email me at dhense177@gmail.com.
+
 
 ## ***Sources***
 

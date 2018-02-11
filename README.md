@@ -203,11 +203,13 @@ An interesting finding here is that distributions for both beta3 and beta4 (coef
 
 ## ***Future Direction***
 
-* To address the issue above, my next step would be to combine the strengths of both the state-level and county-level hierarchical models. I could try only using the state-level models on counties where there is sufficient data on other counties in the same state.
+* Look into negative-centered beta distributions for log radon and Median AQI variables
 
-* I would also like to try analyzing other data that is related to lung cancer incidence (socioeconomic, other health factors).
+* Combine strengths of both the state-level and county-level hierarchical models. I could try only using the state-level models on counties where there is sufficient data on other counties in the same state. I could also try using state-level grouping for certain model parameters and county-level grouping for others when calculating county-wide incidence estimates.
 
-* In addition to standardizing the data by age and gender, it would be helpful to standardize by race/ethnicity as well, since this is another confounding variable that explains differences in incidence.
+* I would  like to try analyzing other data related to lung cancer incidence (socioeconomic, other health factors)
+
+* In addition to standardizing the data by age and gender, it would be helpful to standardize by race/ethnicity as well, since this is a confounding variable that explains differences in incidence rates.
 
 * Lastly, in order to build a strong predictive model that could generalize well to other counties/years, it would be necessary to obtain unaggregated healthcare data with many more data points per county.
 

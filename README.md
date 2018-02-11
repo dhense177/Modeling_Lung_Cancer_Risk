@@ -195,7 +195,7 @@ MCMC is a stochastic procedure which repeatedly draws random samples from the da
 
 PyMC3 is a Probabilistic Programming library in python which I used for this analysis. The left column of the traceplot above shows the distributions for population mean model parameters (blue) and the distributions of individual model parameters (multi-colored) for each county. The right column shows the random walk taken through the parameter space for each of these distributions.
 
-An interesting finding here is that both beta3 and beta4 (coefficients for variables Median AQI and log radon) are negative. Thinking back to the [figure 4 heatmap](##figure-4:-heatmap-showing-correlations-among-features-and-target) - Median AQI did have a negative correlation with lung cancer, but log radon showed a slightly positive correlation (~5%) with lung cancer. This may be due to the relatively high collinearity between log radon and daily smoking (27%). It would certainly be worth taking a deeper look into.
+An interesting finding here is that distributions for both beta3 and beta4 (coefficients for variables Median AQI and log radon) are centered around a negative mean. Thinking back to the [figure 4 heatmap](###figure-4:-heatmap-showing-correlations-among-features-and-target) - Median AQI did have a negative correlation with lung cancer, but log radon showed a slightly positive correlation (~5%) with lung cancer. This may be due to the relatively high collinearity between log radon and daily smoking (27%). It would certainly be worth taking a deeper look into.
 
 ## ***Future Direction***
 

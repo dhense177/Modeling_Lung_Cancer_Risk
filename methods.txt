@@ -2,7 +2,7 @@ Description of methods
 
 Part 1: Calculating lung cancer incidence per 100,000 people standardized by gender and age
 
-Part 2: Fetching and joining additional data
+Part 2: Gathering and incorporating additional data
 
 Part 3: Modeling
 
@@ -17,14 +17,14 @@ lung_dataframe.py reads in RESPIR.csv and cleans it up. First we filter for lung
 
 population.py parses the SEER cancer population data necessary in order to calculate incidence rates per 100,000 people. Age bins are also created here on the population data. Again, this data is not public and so is not included in my repo.
 
-cancer_rates.py joins the SEER incidence and population data together. I've created two dataframes in this script. The first called grouped_overall only has a single entry (row) per county. The second called grouped has 4 entries per county (for different gender and age groups). Cancer incidence per 100,00 people is calculated for these two groups by dividing the cancer counts by the population figures and multiplying by 100,000.
+cancer_rates.py joins the SEER incidence and population data together. I've created two dataframes in this script. The first called grouped_overall only has a single entry (row) per county. The second called grouped has 4 entries per county (for different gender and age groups). Cancer incidence per 100,00 people is calculated for these two dataframes by dividing the cancer counts by the population figures and multiplying by 100,000.
 
-age_standardize.py joins the countywide population figures from combined_overall onto combined. Then, cancer rates are calculated for each county subgroup for all counties multiplying the existing cancer rate in this group (group cancer count / group population) by th ratio of that group's population to the overall county size (group population / county population). This gives us the group cancer count / county population. Now we can simply group this dataframe by county and sum up all the cancer rates among the 4 groups per county to arrive at our age and gender standardized lung cancer incidence rates per 100,000.
+age_standardize.py joins the countywide population figures from combined_overall onto combined. Then, cancer rates are calculated for each county subgroup for all counties multiplying the existing cancer rate in this group (group cancer count / group population) by the ratio of that group's population to the overall county size (group population / county population). This gives us the group cancer count / county population. Now we can simply group this dataframe by county and sum up all the cancer rates among the 4 groups per county to arrive at our age and gender standardized lung cancer incidence rates per 100,000.
 
 
 Part 2
 
-Scripts: join_smoking_air.py, radon.py, AQI.py, TRI.py
+Scripts: join_smoking_air.py, radon.py, AQI.py, TRI.py, feature_engineering.py
 
 
 join_smoking_air.py reads in smoking estimates data and air quality data from the Health Tracking Network. The smoking estimates data comprises estimates of  % adult smokers (both daily and non-daily) per county. The air quality data comprises a number of metrics. I chose to include two variables: average concentrations of PM 2.5 and Days of Ozone above the National Quality Standard.
@@ -35,9 +35,13 @@ AQI.py reads in the EPA AirData comprised of Air Quality Index (AQI) metrics. I 
 
 https://www.epa.gov/outdoor-air-quality-data/about-air-data-reports
 
-TRI.py reads in the EPA Toxic Release Inventory (TRI) data. This data is voluntarily reported by companies in numerous industries, and comprises releases of many types of harmful chemicals into the air, water and land. Due to the sparcity of data on individual chemicals (example: asbestos releases in Los Angeles in 2005), I decided to group all chemicals together that are labeled carcinogens (related to cancer). Nearly all these chemicals are measure in pounds, but a few are measure in grams. I simply summed the release totals without converting grams to pounds.
+TRI.py reads in the EPA Toxic Release Inventory (TRI) data. This data is voluntarily reported by companies in numerous industries, and comprises releases of many types of harmful chemicals into the air, water and land. Due to the sparcity of data on individual chemicals (example: asbestos releases in Los Angeles County in 2005), I decided to group all chemicals together that are labeled carcinogens (related to cancer). Nearly all these chemicals are measure in pounds, but a few are measure in grams. I simply summed the release totals without converting grams to pounds.
 
+feature_engineering.py performs transformations on variables.
+Log transformed variables: radon, ozone, Max AQI, Days PM2.5, releases
+I also used a Gaussian Mixture Model (GMM) to model probabilities of high/low radon levels given that there seem two distinct distributions for radon levels, as can be seen in eda.py.
+Lastly, I created scaled versions of Days PM2.5 and Days PM10 per 366 days per year since the number of days of measurements varied by county.
 
 Part 3
 
-Scripts: 
+Scripts:

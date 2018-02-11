@@ -1,7 +1,7 @@
 # Modeling Lung Cancer Incidence in Select U.S. Counties
 My Galvanize Capstone Project
 
-A special thanks to ZNA Health for helping me formulate my ideas for this project and guiding me towards important data sources and research.
+A special thanks to [ZNA Health](http://www.znahealth.com/) for helping me formulate my ideas for this project and for guiding me towards important data sources and research.
 
 ## ***Index***
 
@@ -44,31 +44,38 @@ I requested research access to the NIH SEER Cancer Data, which comprises both ca
 
 A considerable amount of time was spent cleaning and grouping the SEER data so that it could be joined with the other data sources mentioned above.
 
-The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodology) so that adult smoking percentages can be compared among counties without looking at the role that gender and age play in determining smoking behavior. I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000, using age groups <65 and 65+. More detailed explanations of my methodology can be found in [methods.txt](https://github.com/dhense177/Modeling_Lung_Cancer_Risk/blob/master/methods.txt)
+The only county-wide smoking data I could find were age and gender standardized (according to U.S. census methodology) so that adult smoking percentages can be compared among counties without looking at the role that gender and age play in determining smoking behavior. I decided to use this same methodology to compute age and gender standardized lung cancer incidence figures per 100,000 people, using age groups <65 and 65+. More detailed explanations of my methodology can be found in [methods.txt](https://github.com/dhense177/Modeling_Lung_Cancer_Risk/blob/master/methods.txt)
 
 
 ## ***Feature Selection***
 
-When deciding which of the features to include in my models, I compared the Bayesian Information Criteria (BIC) and Akaike Information Criteria (AIC) scores of various Lasso regressions that I ran, each including a different set of predictors:
+A question you may be asking yourself - why not just use all the features we have to try to estimate county-wide incidence rates?
+
+The problem with this approach is that features which do not actually relate to lung cancer incidence will be adding "noise" to the model. This noise will be used by the model in making predictions, but they would not generalize to other counties or future years. This is commonly referred to as overfitting.
+
+So we need to find the features which relate most to lung cancer incidence and drop redundant features or those which don't provide very much information.
+
+When deciding which features to include in my models, I compared the Bayesian Information Criteria (BIC) and Akaike Information Criteria (AIC) scores of various Lasso regressions that I ran, each including a different set of predictors:
 
 ![](Visuals/bic_table5.png)
 
 ### Table 1: Comparing feature sets using BIC scores
 
-These estimators are able to help deal with the overfitting problem mentioned previously. The first component of the BIC, called the likelihood function, is a measure of goodness of fit between a model and the data. The more features you include in your model, the higher your likelihood function will be (the higher the better). The second component of BIC is the regularization parameter. This term penalizes models by the number of features included. So models containing extra features that don't add much information will show higher scores (worse).
+
+The first component of the BIC, called the likelihood function, is a measure of goodness of fit between a model and the data. The more features you include in your model, the higher your likelihood function will be (the higher the better). The second component of BIC is the regularization parameter. This term penalizes models by the number of features included. So models containing extra features that don't add much information will show higher scores (worse).
 
 The model which minimizes the BIC is comprised of features:
 * Adult Daily Smoking % Estimates
 * Days of Harmful PM 2.5 Levels
 * Air Quality Index Levels
-* Mean Radon Levels
+* Log Mean Radon Levels
 
 
 ## ***Primary Assumptions Behind Linear Regression***
 
 ### 1. Sample Data Representative of Population
 
-Here it would be wise to consider what population comprises our sample counties. All U.S. Counties? Probably not. The data in this analysis is limited - we only have cancer data on counties in 7 states. Also, the health and environmental data I gathered tends to be more available in larger counties (>100,000 people). Therefore, it would make more sense to say that the relevant population is large U.S. counties or only large counties in the 7 states in the data (and similar states).
+Here it would be wise to consider what population we can infer from our sample counties. All U.S. Counties? Probably not. The data in this analysis is limited - we only have cancer data on counties in 7 states. Also, the health and environmental data I gathered tends to be more available in larger counties (>100,000 people). Therefore, it would make more sense to say that the relevant population is large U.S. counties or only large counties in the 7 states in the data (and maybe similar states).
 
 ### 2. True Relationship Between X and Y is Linear
 
@@ -86,7 +93,11 @@ It is safe to say that the relationship between our variables and lung cancer in
 
 ### Figure 4: Heatmap showing correlations among features and target
 
-There does not seem to be any collinearity between features that we should worry about. One interesting finding, though, is that there is a negative correlation between Median Air Quality index values and cancer incidence in these counties. Daily smoking is clearly the strongest predictor of lung cancer while log radon levels and Days of high PM2.5 seem to be adding some information as well.
+There does not seem to be any serious collinearity between features that we should worry about. The correlations between smoking and radon (0.27) and Median AQI and smoking (-0.23) are the largest in absolute terms among the set of variables.
+
+One interesting finding is that there appears to be a negative correlation between Median Air Quality Index values and lung cancer incidence in these counties. This certainly warrants further investigation.
+
+Daily smoking is the most correlated feature with lung cancer incidence while log mean radon levels and days of high PM2.5 seem to be adding some information as well.
 
 ### 4. Residuals are Independent and Normally Distributed
 
@@ -131,16 +142,41 @@ Multilevel, or hierarchical regression techniques are a compromise between the p
 ![](Visuals/multilevel_formula.png)
 
 This type of parameter estimation is core to Bayesian Statistics. While
-frequentist methods assume that model coefficients are always fixed, Bayesian methods try to estimate the coefficients. I will discuss the details of this estimation in the following section.
+frequentist methods assume that model coefficients are always fixed, Bayesian methods try to estimate the coefficients. I will discuss the details of this estimation in the [following section](#multilevel-modeling---details).
 
-I tried 2 multilevel models, differing by the group distributions specified. The first used state-level grouping, so that the prior distribution for each county is made up of all other counties in that state. The second grouped all counties together.
+I tried 2 multilevel models, differing by the group distributions specified. The first uses state-level grouping, so that the population distribution for each county comprises all counties in the same state. The second model uses a population distribution comprising all 105 counties in the data.
 
 
 ![](Visuals/regression_table2.png)
 ### Table 2: Linear Model Comparison
 
 
-Overall I obtained the best results by estimating model coefficients using a group distribution comprising all counties in my dataset.
+Overall I obtained the best results by estimating model coefficients using a group distribution comprising all counties without state-level grouping.
+
+
+## ***Multilevel Modeling - Difference Between Models***
+
+Lets take a look at Warren County, KY to get a better sense for the difference between the 2 multilevel models I tried:
+
+![](Visuals/warren_county.png)
+
+Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower incidence ~80-85, the dark green line is shifted upwards towards the Kentucky group mean. The dark blue line, however, fits the local data very well and seems less influenced by the overall mean for all counties in my data (~70 per 100,000).
+
+Looking at plots from a few other counties:
+
+![](Visuals/hier_counties15.png)
+
+It is clear that the county-level model produces point estimates and 95% confidence intervals that fit the data much better than the state-grouped approach, also evident by the model's significantly lower RMSE.
+
+Looking at the point estimates and 95% confidence intervals for mean incidence rates across all counties:
+
+![](Visuals/hier_point_estimates.png)
+
+### Figure 5: Point estimates and 95% Confidence Intervals for Multilevel Models
+
+### ***Caveat***
+
+Since I was limited by data availability for many of the variables I used, there are some states with very few counties in my data. For example, I only have data on 3 counties in Michigan, even though there are 83 in the state. Using the state-level hierarchical model, counties in these states are highly influenced by only a few other counties in the same state, which may be why this model underperforms the baseline unpooled model.
 
 ## ***Multilevel Modeling - Details***
 
@@ -159,32 +195,7 @@ MCMC is a stochastic procedure which repeatedly draws random samples from the da
 
 PyMC3 is a Probabilistic Programming library in python which I used for this analysis. The left column of the traceplot above shows the distributions for population mean model parameters (blue) and the distributions of individual model parameters (multi-colored) for each county. The right column shows the random walk taken through the parameter space for each of these distributions.
 
-An interesting finding here is that both beta3 and beta4 (coefficients for variables Median AQI and log radon) are negative. This is certainly worth taking a deeper look into.
-
-
-## ***Multilevel Modeling - Difference Between Models***
-
-Lets take a look at Warren County, KY to get a better sense for the difference between the 2 multilevel models I tried:
-
-![](Visuals/warren_county.png)
-
-Kentucky counties have the highest lung cancer incidence out of all states in my data. The statewide average is ~100 per 100,000. Even though Warren County seems to show significantly lower incidence ~80-85, the dark green line is shifted upwards towards the Kentucky group mean. The dark blue line, however, fits the local data very well and is closer to the overall mean for counties in my dataset ~70 per 100,000.
-
-Looking at plots from a few other counties:
-
-![](Visuals/hier_counties15.png)
-
-It is clear from these plots that the County-Level model produces point estimates and 95% confidence intervals that fit the data much better than the state-grouped approach, evident by the model's significantly lower RMSE.
-
-Looking at these point estimates and 95% confidence intervals across all counties:
-
-![](Visuals/hier_point_estimates.png)
-
-### Figure 5: Point estimates and 95% Confidence Intervals for Multilevel Models
-
-### ***Caveat***
-
-Since I was limited by data availability for many of the variables I used, there are some states with very few counties in my dataset. For example, I only have data on 3 counties in Michigan, even though there are 83 in the state. Using the state-level hierarchical model, counties in these states are highly influenced by only a few other counties in the same state, which may be why this model underperforms the baseline unpooled model.
+An interesting finding here is that both beta3 and beta4 (coefficients for variables Median AQI and log radon) are negative. Thinking back to the [figure 4 heatmap](#-figure-4:-heatmap-showing-correlations-among-features-and-target) - Median AQI did have a negative correlation with lung cancer, but log radon showed a slightly positive correlation (~5%) with lung cancer. This may be due to the relatively high collinearity between log radon and daily smoking (27%). It would certainly be worth taking a deeper look into.
 
 ## ***Future Direction***
 

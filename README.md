@@ -12,8 +12,8 @@ A special thanks to [ZNA Health](http://www.znahealth.com/) for helping me formu
 * [Primary Assumptions Behind Linear Regression](#primary-assumptions-behind-linear-regression)
 * [Simple Linear Regression](#simple-linear-regression)
 * [Multilevel Modeling](#multilevel-modeling)
-* [Multilevel Modeling - Details](#multilevel-modeling---details)
 * [Multilevel Modeling - Difference Between Models](#multilevel-modeling---difference-between-models)
+* [Multilevel Modeling - Details](#multilevel-modeling---details)
 * [Future Direction](#future-direction)
 
 ## ***Motivation***

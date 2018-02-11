@@ -178,6 +178,8 @@ Looking at the point estimates and 95% confidence intervals for mean incidence r
 
 ### Figure 9: Point Estimates and 95% Confidence Intervals of Mean Incidence from Multilevel Models in All Counties
 
+An important point to note is that the Bayesian 95% confidence intervals displayed in the above graphs can correctly be interpreted as containing 95% of the true incidence values unlike standard frequentist intervals. This is one of the major advantages of Bayesian modeling.
+
 ### ***Caveat***
 
 Since I was limited by data availability for many of the variables I used, there are some states with very few counties in my data. For example, I only have data on 3 counties in Michigan, even though there are 83 in the state. Using the state-level hierarchical model, counties in these states are highly influenced by only a few other counties in the same state, which may be why this model underperforms the baseline unpooled model.

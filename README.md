@@ -52,7 +52,7 @@ The only county-wide smoking data I could find were age and gender standardized 
 
 One obvious question - why not just use all the features we have to try to estimate county-wide incidence rates?
 
-The problem with this approach is that features which do not actually relate to lung cancer incidence will be adding "noise" to the model. This noise will be used by the model in making predictions that would not generalize to other counties or future years. This is commonly referred to as overfitting.
+The problem with this approach is that features which do not actually relate to lung cancer incidence will be adding "noise" to the model. The noise will be used by the model in making predictions that would not generalize well to other counties or future years. This phenomena is commonly known as overfitting.
 
 So we need to find the features which relate most to lung cancer incidence and drop redundant features or those which don't provide very much information.
 

@@ -202,7 +202,7 @@ MCMC is a stochastic procedure which repeatedly draws random samples from the da
 * Markov Chain: Generates random samples from dataset. Directed random walk (sampling of parameter values proportional to their probabilities) through parameter space which describes all possible values for parameters of interest
 * Monte Carlo: Generates summary statistics from random samples
 
-<img src="https://github.com/dhense177/Modeling_Lung_Cancer_Risk/blob/master/Visuals/hier_code.png" width="650">
+<img src="https://github.com/dhense177/Modeling_Lung_Cancer_Risk/blob/master/Visuals/hier_code.png" width="700">
 
 ![](Visuals/mm_traces.png)
 ### Figure 10: PyMC3 Traceplot

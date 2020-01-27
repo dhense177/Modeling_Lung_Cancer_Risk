@@ -139,7 +139,7 @@ Both counties and states share many similarities that would explain lung cancer 
 
 ## ***Multilevel Modeling***
 
-Multilevel, or hierarchical regression techniques are a compromise between the pooled and unpooled methods. This approach assumes that while the coefficients (y-intercept, slope terms) are different for each county, they all come from a common group distribution ("prior").
+Multilevel, or hierarchical regression techniques are a compromise between the pooled and unpooled methods. This approach assumes that while the coefficients (y-intercept, slope terms) are different for each county, they all come from a common group distribution.
 
 ![](Visuals/multilevel_formula.png)
 

@@ -190,7 +190,7 @@ Since I was limited by data availability for many of the variables I used, there
 
 ## ***Multilevel Modeling - Details***
 
-![](Visuals/hierarchical_code.png)
+![](Visuals/hierarchical_code)
 
 Since our results show a significant improvement over non-hierarchical methods, let's take a deeper look into the multilevel modeling approach.
 

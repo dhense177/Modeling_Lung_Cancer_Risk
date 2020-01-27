@@ -190,6 +190,8 @@ Since I was limited by data availability for many of the variables I used, there
 
 ## ***Multilevel Modeling - Details***
 
+![](Visuals/hierarchical_code.png)
+
 Since our results show a significant improvement over non-hierarchical methods, let's take a deeper look into the multilevel modeling approach.
 
 We are fitting separate regressions for each county and trying to estimate model parameters so as to avoid overfitting produced by our unpooled model. Our multilevel estimates of county lung cancer incidence incorporate similarities between all U.S. counties in the data, and should generalize much better to other similar counties.

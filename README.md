@@ -190,7 +190,7 @@ Since I was limited by data availability for many of the variables I used, there
 
 ## ***Multilevel Modeling - Details***
 
-<img src="https://github.com/dhense177/Modeling_Lung_Cancer_Risk/blob/master/Visuals/hier_code.png" width="700">
+![](Visuals/joint_posterior.png)
 
 Since our results show a significant improvement over non-hierarchical methods, let's take a deeper look into the multilevel modeling approach.
 
@@ -201,6 +201,8 @@ The estimation process is accomplished using the Markov Chain Monte Carlo (MCMC)
 MCMC is a stochastic procedure which repeatedly draws random samples from the dataset which characterize the distribution of parameters of interest.
 * Markov Chain: Generates random samples from dataset. Directed random walk (sampling of parameter values proportional to their probabilities) through parameter space which describes all possible values for parameters of interest
 * Monte Carlo: Generates summary statistics from random samples
+
+<img src="https://github.com/dhense177/Modeling_Lung_Cancer_Risk/blob/master/Visuals/hier_code.png" width="650">
 
 ![](Visuals/mm_traces.png)
 ### Figure 10: PyMC3 Traceplot

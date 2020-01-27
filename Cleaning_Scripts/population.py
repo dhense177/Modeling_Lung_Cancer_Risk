@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import pickle,os,csv
 
-clean_df = pd.DataFrame(columns=['Year','State postal abbr','State FIPS','County FIPS','Registry','Race','Origin','Sex','Age','Population'])
 
 
 def parse(df):
@@ -20,7 +19,7 @@ def parse(df):
     df_parsed = pd.DataFrame.from_dict(dct, orient='index')
     return df_parsed
 
-#Creates 2 age bins (<65 and >65)
+#Creates 2 age bins (<69 and >69)
 def agebins(processed):
     bins = [0, 14, 18]
     labels = [1,2]
@@ -31,14 +30,17 @@ def agebins(processed):
 
 def col_changes(df_new):
     df_new.columns = clean_df.columns
-    df_new['State-county recode']=df_new['State FIPS'].apply(lambda x: str(x).zfill(2))+df_new['County FIPS'].apply(lambda x: str(x).zfill(3))
+    df_new['FIPS']=df_new['State FIPS'].apply(lambda x: str(x).zfill(2))+df_new['County FIPS'].apply(lambda x: str(x).zfill(3))
     df_new.Population = df_new.Population.apply(pd.to_numeric)
+    df_new.Year = df_new.Year.astype(int)
 
 if __name__=='__main__':
-    filepath = '/home/davidhenslovitz/Galvanize/ZNAHealth/'
+    filepath = '/home/dhense/PublicData/ZNAHealth/intermediate_files/'
+    clean_df = pd.DataFrame(columns=['Year','State postal abbr','State FIPS','County FIPS','Registry','Race','Origin','Sex','Age','Population'])
 
-    if not os.path.isfile(filepath+'population.csv'):
-        population = pd.read_table('/home/davidhenslovitz/Galvanize/ZNAHealth/us.1969_2016.19ages.adjusted.txt',header=None)
+
+    if not os.path.isfile(filepath+'Population.csv'):
+        population = pd.read_table('/home/dhense/PublicData/ZNAHealth/Restricted_data/us.1969_2016.19ages.adjusted.txt',header=None)
 
         # Won't load on my machine without splitting the data into two groups and then concatenating
         population1 = population[:7000000]
@@ -52,12 +54,12 @@ if __name__=='__main__':
 
         processed = pd.concat([df1, df2])
 
-        processed.to_csv('filepath+population.csv', index=False)
+        processed.to_csv('filepath+Population.csv', index=False)
 
     pop_pickle = 'pop.pickle'
 
     if not os.path.isfile(filepath+pop_pickle):
-        processed = pd.read_csv(filepath+'population.csv', names=clean_df.columns)
+        processed = pd.read_csv(filepath+'Population.csv', names=clean_df.columns)
         processed = processed.drop(processed.index[0])
         col_changes(processed)
         agebins(processed)

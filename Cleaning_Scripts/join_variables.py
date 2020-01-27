@@ -56,9 +56,11 @@ def process_radon(df):
     df['county'] = df.county.str.title()
     df['State_and_county'] = df.county.str.strip() + ' County, ' + df.state.str.strip()
 
+    df.rename(columns={'activity':'Radon_mean'},inplace=True)
+
     return df
 
-## Duplicate with adjust_fips#######################################################
+
 def process_aqi(total):
     total = pd.merge(df_aqi, mapper, how='left', on='State')
     total['State_and_county'] = total.County + " County, " + total.Postal.astype(str)
@@ -66,6 +68,7 @@ def process_aqi(total):
     total = total[(total.Year>1999) & (total.Year<2013)]
     total.Year = total.Year.astype(int)
 
+    total.rename(columns={'Days PM2.5':'Days_PM2.5','Days PM10':'Days_PM10','Median AQI':'Median_AQI','Max AQI':'Max_AQI', 'Days with AQI':'Days_with_AQI'},inplace=True)
     return total.reset_index(drop=True)
 
 
@@ -138,7 +141,7 @@ if __name__=='__main__':
         df = process_radon(df)
 
         #Using mean county-wide radon activity over years 1988-1992 due to data sparcity
-        df_radon = pd.DataFrame(df.groupby(['State_and_county'])['activity'].mean()).reset_index()
+        df_radon = pd.DataFrame(df.groupby(['State_and_county'])['Radon_mean'].mean()).reset_index()
         print("...saving pickle")
         tmp = open(filepath+'intermediate_files/'+radon_pickle,'wb')
         pickle.dump(df_radon,tmp)
@@ -162,7 +165,7 @@ if __name__=='__main__':
 
     df_aqi = process_aqi(df_aqi)
 
-    df_aqi = df_aqi[['State_and_county', 'Year', 'Days PM2.5','Days PM10','Median AQI','Max AQI', 'Days with AQI']]
+    df_aqi = df_aqi[['State_and_county', 'Year', 'Days_PM2.5','Days_PM10','Median_AQI','Max_AQI', 'Days_with_AQI']]
 
 
 ######################## TRI #############################
@@ -210,7 +213,13 @@ if __name__=='__main__':
     counties = county_counts[county_counts.values==county_counts.values.max()].index
     df_merged = df_merged[df_merged['State_and_county'].isin(counties)].reset_index(drop=True)
 
+################# SAVE AS PICKLE #######################
+    merged_pickle = 'merged.pickle'
 
+    print("...saving pickle")
+    tmp = open(filepath+'intermediate_files/'+merged_pickle,'wb')
+    pickle.dump(df_merged,tmp)
+    tmp.close()
 
 '''
 

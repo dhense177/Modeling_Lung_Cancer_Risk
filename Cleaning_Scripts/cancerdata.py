@@ -35,9 +35,11 @@ def create_df(dct, df):
 
 
 if __name__=='__main__':
-    filepath1 = '/home/davidhenslovitz/Galvanize/ZNAHealth/SEER_1973_2014_TEXTDATA/incidence/yr1973_2014.seer9/RESPIR.TXT'
-    filepath2 = '/home/davidhenslovitz/Galvanize/ZNAHealth/SEER_1973_2014_TEXTDATA/incidence/yr1992_2014.sj_la_rg_ak/RESPIR.TXT'
-    filepath3 = '/home/davidhenslovitz/Galvanize/ZNAHealth/SEER_1973_2014_TEXTDATA/incidence/yr2000_2014.ca_ky_lo_nj_ga/RESPIR.TXT'
+    filepath = '/home/dhense/PublicData/ZNAHealth/intermediate_files/'
+
+    filepath1 = '/home/dhense/PublicData/ZNAHealth/Restricted_data/SEER_1973_2014_TEXTDATA/incidence/yr1973_2014.seer9/RESPIR.TXT'
+    filepath2 = '/home/dhense/PublicData/ZNAHealth/Restricted_data/SEER_1973_2014_TEXTDATA/incidence/yr1992_2014.sj_la_rg_ak/RESPIR.TXT'
+    filepath3 = '/home/dhense/PublicData/ZNAHealth/Restricted_data/SEER_1973_2014_TEXTDATA/incidence/yr2000_2014.ca_ky_lo_nj_ga/RESPIR.TXT'
 
     filepaths = [filepath1, filepath2, filepath3]
 
